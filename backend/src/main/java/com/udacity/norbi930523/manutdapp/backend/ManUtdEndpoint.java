@@ -3,6 +3,12 @@ package com.udacity.norbi930523.manutdapp.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.udacity.norbi930523.manutdapp.backend.dto.ArticleVO;
+import com.udacity.norbi930523.manutdapp.backend.dto.FixtureVO;
+import com.udacity.norbi930523.manutdapp.backend.dto.PlayerVO;
+import com.udacity.norbi930523.manutdapp.backend.parser.FixturesJsonParser;
+import com.udacity.norbi930523.manutdapp.backend.parser.NewsJsonParser;
+import com.udacity.norbi930523.manutdapp.backend.parser.PlayersJsonParser;
 
 import javax.inject.Named;
 
@@ -25,6 +31,21 @@ public class ManUtdEndpoint {
         response.setData("Hi, " + name);
 
         return response;
+    }
+
+    @ApiMethod(name = "news", httpMethod = "GET")
+    public ArticleVO[] news() {
+        return NewsJsonParser.getInstance().getJson();
+    }
+
+    @ApiMethod(name = "players", httpMethod = "GET")
+    public PlayerVO[] players() {
+        return PlayersJsonParser.getInstance().getJson();
+    }
+
+    @ApiMethod(name = "fixtures", httpMethod = "GET")
+    public FixtureVO[] fixtures() {
+        return FixturesJsonParser.getInstance().getJson();
     }
 
 }
