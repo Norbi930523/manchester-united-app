@@ -1,6 +1,7 @@
 package com.udacity.norbi930523.manutdapp.network;
 
 import android.app.IntentService;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 
@@ -12,6 +13,8 @@ import com.udacity.norbi930523.manutdapp.BuildConfig;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.backend.manutd.Manutd;
 import com.udacity.norbi930523.manutdapp.backend.manutd.model.ArticleVO;
+import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
+import com.udacity.norbi930523.manutdapp.database.news.NewsProvider;
 
 import java.io.IOException;
 import java.util.List;
@@ -101,7 +104,25 @@ public class DataLoaderIntentService extends IntentService {
             return;
         }
 
+        getContentResolver().delete(NewsProvider.News.NEWS, null, null);
 
+        ContentValues[] values = new ContentValues[articles.size()];
+        for(int i = 0; i < articles.size(); i++){
+            ArticleVO article = articles.get(i);
+
+            ContentValues cv = new ContentValues();
+            cv.put(ArticleColumns._ID, article.getId());
+            cv.put(ArticleColumns.TITLE, article.getTitle());
+            cv.put(ArticleColumns.SUBTITLE, article.getSubtitle());
+            cv.put(ArticleColumns.DATE, article.getDate());
+            cv.put(ArticleColumns.SUMMARY, article.getSummary());
+            cv.put(ArticleColumns.CONTENT, article.getContent());
+            cv.put(ArticleColumns.IMAGE_URL, article.getImageUrl());
+
+            values[i] = cv;
+        }
+
+        getContentResolver().bulkInsert(NewsProvider.News.NEWS, values);
     }
 
     private void handleActionLoadPlayers() {

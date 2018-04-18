@@ -23,6 +23,11 @@
         <service
             android:name=".network.DataLoaderIntentService"
             android:exported="false" />
+
+        <provider
+            android:authorities="com.udacity.norbi930523.manutdapp.news"
+            android:name=".database.generated.NewsProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>
