@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Manchester United App</string>
+
+    <string name="news_title">News</string>
 </resources>
