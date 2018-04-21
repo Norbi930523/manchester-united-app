@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.NewsActivity"
-            android:label="@string/news_title">
+        <activity android:name=".activity.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,14 +22,19 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.NewsActivity"
+            android:label="@string/news_title" />
+
         <service
             android:name=".network.DataLoaderIntentService"
             android:exported="false" />
 
         <provider
-            android:authorities="com.udacity.norbi930523.manutdapp.news"
             android:name=".database.generated.NewsProvider"
-            android:exported="false"/>
+            android:authorities="com.udacity.norbi930523.manutdapp.news"
+            android:exported="false" />
+
     </application>
 
 </manifest>
