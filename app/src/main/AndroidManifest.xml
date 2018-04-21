@@ -12,8 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activity.SplashActivity"
+        <activity
+            android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,16 @@
 
         <activity
             android:name=".activity.NewsActivity"
-            android:label="@string/news_title" />
+            android:label="@string/news_title"
+            android:launchMode="singleTop"/>
+
+        <activity android:name=".activity.ArticleDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activity.NewsActivity">
+
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.NewsActivity"/>
+        </activity>
 
         <service
             android:name=".network.DataLoaderIntentService"

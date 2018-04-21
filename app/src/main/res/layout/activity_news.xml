@@ -3,16 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/newsRecyclerView"
+    <fragment
+        android:id="@+id/articleListFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <ProgressBar
-        android:id="@+id/loadingIndicator"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:visibility="gone"
-        android:layout_gravity="center"/>
+        android:layout_height="match_parent"
+        android:name="com.udacity.norbi930523.manutdapp.fragment.ArticleListFragment"/>
 
 </FrameLayout>

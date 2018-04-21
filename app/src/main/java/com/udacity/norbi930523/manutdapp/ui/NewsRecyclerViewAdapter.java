@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
+import com.udacity.norbi930523.manutdapp.fragment.ArticleListFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,9 +24,12 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     private Context context;
 
-    public NewsRecyclerViewAdapter(Context context){
+    private ArticleListFragment.ArticleListItemClickListener articleListItemClickListener;
+
+    public NewsRecyclerViewAdapter(Context context, ArticleListFragment.ArticleListItemClickListener articleListItemClickListener){
         super();
         this.context = context;
+        this.articleListItemClickListener = articleListItemClickListener;
 
         setHasStableIds(true);
     }
@@ -44,6 +48,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
         cursor.moveToPosition(position);
 
+        holder.articleId = cursor.getLong(cursor.getColumnIndex(ArticleColumns._ID));
         holder.articleTitle.setText(cursor.getString(cursor.getColumnIndex(ArticleColumns.TITLE)));
         holder.articleDate.setText(cursor.getString(cursor.getColumnIndex(ArticleColumns.DATE)));
 
@@ -77,7 +82,9 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         notifyDataSetChanged();
     }
 
-    class ArticleViewHolder extends RecyclerView.ViewHolder {
+    class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        Long articleId;
 
         @BindView(R.id.articleImage)
         ImageView articleImage;
@@ -92,6 +99,13 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            articleListItemClickListener.onArticleClick(articleId);
         }
     }
 

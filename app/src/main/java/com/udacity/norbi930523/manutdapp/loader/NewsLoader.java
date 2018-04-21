@@ -32,7 +32,11 @@ public class NewsLoader extends CursorLoader {
         return new NewsLoader(context, NewsProvider.News.NEWS, PROJECTION_LIST, null, null, null);
     }
 
-    NewsLoader(@NonNull Context context, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+    public static NewsLoader singleArticle(Context context, Long articleId){
+        return new NewsLoader(context, NewsProvider.News.withId(articleId), PROJECTION_DETAIL, null, null, null);
+    }
+
+    private NewsLoader(@NonNull Context context, @NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         super(context, uri, projection, selection, selectionArgs, sortOrder);
     }
 
