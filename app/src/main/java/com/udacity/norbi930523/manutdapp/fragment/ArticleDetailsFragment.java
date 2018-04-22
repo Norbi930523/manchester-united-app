@@ -78,7 +78,11 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
 
         ButterKnife.bind(this, root);
 
-        getActivity().getSupportLoaderManager().initLoader(ARTICLE_LOADER_ID, null, this);
+        if(savedInstanceState == null){
+            getActivity().getSupportLoaderManager().initLoader(ARTICLE_LOADER_ID, null, this);
+        } else {
+            getActivity().getSupportLoaderManager().restartLoader(ARTICLE_LOADER_ID, null, this);
+        }
 
         return root;
     }

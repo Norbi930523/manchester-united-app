@@ -4,6 +4,7 @@ package com.udacity.norbi930523.manutdapp.fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,8 @@ import butterknife.ButterKnife;
 
 public class ArticleListFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final String LIST_STATE_KEY = "listState";
+
     private static final int NEWS_LOADER_ID = 100;
 
     @BindView(R.id.loadingIndicator)
@@ -36,8 +39,19 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     private NewsRecyclerViewAdapter newsAdapter;
 
+    private Parcelable listState;
+
     public ArticleListFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null){
+            listState = savedInstanceState.getParcelable(LIST_STATE_KEY);
+        }
     }
 
     @Override
@@ -61,17 +75,27 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         newsRecyclerView.setAdapter(newsAdapter);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        loadNews();
+        loadNews(savedInstanceState == null);
 
         return root;
     }
 
-    private void loadNews(){
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelable(LIST_STATE_KEY, newsRecyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    private void loadNews(boolean initLoader){
         loadingIndicator.setVisibility(View.VISIBLE);
 
-        getActivity().getSupportLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
+        if(initLoader){
+            getActivity().getSupportLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
 
-        DataLoaderIntentService.startActionLoadNews(getContext());
+            DataLoaderIntentService.startActionLoadNews(getContext());
+        } else {
+            getActivity().getSupportLoaderManager().restartLoader(NEWS_LOADER_ID, null, this);
+        }
+
     }
 
     @NonNull
@@ -85,6 +109,12 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         loadingIndicator.setVisibility(View.GONE);
 
         newsAdapter.swapCursor(data);
+
+        /* Restore saved state if there is any */
+        if(listState != null){
+            newsRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
+            listState = null;
+        }
     }
 
     @Override

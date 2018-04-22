@@ -21,7 +21,9 @@ public class ArticleDetailsActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         Long articleId = extras.getLong(ARTICLE_ID_PARAM);
 
-        showArticle(articleId);
+        if(savedInstanceState == null){
+            showArticle(articleId);
+        }
     }
 
     private void showArticle(Long articleId){
