@@ -15,6 +15,7 @@ import com.udacity.norbi930523.manutdapp.backend.manutd.Manutd;
 import com.udacity.norbi930523.manutdapp.backend.manutd.model.ArticleVO;
 import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
 import com.udacity.norbi930523.manutdapp.database.news.NewsProvider;
+import com.udacity.norbi930523.manutdapp.util.DateUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -114,7 +115,7 @@ public class DataLoaderIntentService extends IntentService {
             cv.put(ArticleColumns._ID, article.getId());
             cv.put(ArticleColumns.TITLE, article.getTitle());
             cv.put(ArticleColumns.SUBTITLE, article.getSubtitle());
-            cv.put(ArticleColumns.DATE, article.getDate());
+            cv.put(ArticleColumns.DATE, DateUtils.parseDate(article.getDate()));
             cv.put(ArticleColumns.SUMMARY, article.getSummary());
             cv.put(ArticleColumns.CONTENT, article.getContent());
             cv.put(ArticleColumns.IMAGE_URL, article.getImageUrl());

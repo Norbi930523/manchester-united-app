@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
 import com.udacity.norbi930523.manutdapp.fragment.ArticleListFragment;
+import com.udacity.norbi930523.manutdapp.util.DateUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +51,9 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
         holder.articleId = cursor.getLong(cursor.getColumnIndex(ArticleColumns._ID));
         holder.articleTitle.setText(cursor.getString(cursor.getColumnIndex(ArticleColumns.TITLE)));
-        holder.articleDate.setText(cursor.getString(cursor.getColumnIndex(ArticleColumns.DATE)));
+
+        long articleDate = cursor.getLong(cursor.getColumnIndex(ArticleColumns.DATE));
+        holder.articleDate.setText(DateUtils.formatDate(articleDate));
 
         String imageUrl = cursor.getString(cursor.getColumnIndex(ArticleColumns.IMAGE_URL));
 

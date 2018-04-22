@@ -21,7 +21,7 @@ public interface ArticleColumns {
     @DataType(DataType.Type.TEXT)
     String CONTENT = "content";
 
-    @DataType(DataType.Type.TEXT)
+    @DataType(DataType.Type.INTEGER)
     String DATE = "date";
 
     @DataType(DataType.Type.TEXT)
