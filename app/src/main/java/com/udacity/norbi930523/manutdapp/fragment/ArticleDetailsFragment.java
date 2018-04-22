@@ -15,6 +15,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -98,9 +99,7 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
 
             initToolbar(title);
 
-            Picasso.with(getContext())
-                    .load(imageUrl)
-                    .into(articleImage);
+            loadImage(imageUrl);
 
             articleSummary.setText(summary);
 
@@ -129,5 +128,23 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
 
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void loadImage(String imageUrl){
+        /* Start transition when the ImageView is laid out */
+        articleImage.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        articleImage.getViewTreeObserver().removeOnPreDrawListener(this);
+                        getActivity().supportStartPostponedEnterTransition();
+                        return true;
+                    }
+                }
+        );
+
+        Picasso.with(getContext())
+                .load(imageUrl)
+                .into(articleImage);
     }
 }

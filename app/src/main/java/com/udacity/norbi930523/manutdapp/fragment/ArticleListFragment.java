@@ -94,7 +94,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     public interface ArticleListItemClickListener {
 
-        void onArticleClick(Long articleId);
+        void onArticleClick(Long articleId, View sharedElement);
 
     }
 }

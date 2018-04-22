@@ -105,7 +105,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
         @Override
         public void onClick(View v) {
-            articleListItemClickListener.onArticleClick(articleId);
+            articleListItemClickListener.onArticleClick(articleId, articleImage);
         }
     }
 
