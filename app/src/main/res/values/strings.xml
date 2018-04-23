@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Manchester United App</string>
 
+    <string name="is_offline">You are offline</string>
+
     <string name="news_title">News</string>
     <string name="article_not_found">Could not find the selected article!</string>
     <string name="article_image_transition">articleImageTransition</string>

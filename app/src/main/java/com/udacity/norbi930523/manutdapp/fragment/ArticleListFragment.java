@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -21,6 +22,7 @@ import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.loader.NewsLoader;
 import com.udacity.norbi930523.manutdapp.network.DataLoaderIntentService;
 import com.udacity.norbi930523.manutdapp.ui.NewsRecyclerViewAdapter;
+import com.udacity.norbi930523.manutdapp.util.NetworkUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,7 +93,12 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
         if(initLoader){
             getActivity().getSupportLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
 
-            DataLoaderIntentService.startActionLoadNews(getContext());
+            if(NetworkUtils.isOnline(getContext())){
+                DataLoaderIntentService.startActionLoadNews(getContext());
+            } else {
+                Snackbar.make(newsRecyclerView, R.string.is_offline, Snackbar.LENGTH_LONG).show();
+            }
+
         } else {
             getActivity().getSupportLoaderManager().restartLoader(NEWS_LOADER_ID, null, this);
         }

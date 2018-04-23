@@ -19,6 +19,7 @@ import com.udacity.norbi930523.manutdapp.backend.manutd.model.ArticleVO;
 import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
 import com.udacity.norbi930523.manutdapp.database.news.NewsProvider;
 import com.udacity.norbi930523.manutdapp.util.DateUtils;
+import com.udacity.norbi930523.manutdapp.util.NetworkUtils;
 
 import java.io.IOException;
 import java.util.Date;
@@ -103,11 +104,9 @@ public class DataLoaderIntentService extends IntentService {
             initApiService();
         }
 
-        List<ArticleVO> articles = null;
-        try {
-            articles = manutdApiService.news(getNewsLastUpdate()).execute().getItems();
-        } catch (IOException e) {
-            Timber.e(e, "Failed to load news from API");
+        List<ArticleVO> articles = loadArticlesFromServer();
+
+        if(articles == null){
             return;
         }
 
@@ -130,6 +129,19 @@ public class DataLoaderIntentService extends IntentService {
         }
 
         getContentResolver().bulkInsert(NewsProvider.News.NEWS, values);
+    }
+
+    private List<ArticleVO> loadArticlesFromServer(){
+        if(NetworkUtils.isOffline(this)){
+            return null;
+        }
+
+        try {
+            return manutdApiService.news(getNewsLastUpdate()).execute().getItems();
+        } catch (IOException e) {
+            Timber.e(e, "Failed to load news from API");
+            return null;
+        }
     }
 
     private DateTime getNewsLastUpdate(){
