@@ -4,11 +4,14 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+import com.google.api.client.util.DateTime;
 import com.udacity.norbi930523.manutdapp.BuildConfig;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.backend.manutd.Manutd;
@@ -18,12 +21,15 @@ import com.udacity.norbi930523.manutdapp.database.news.NewsProvider;
 import com.udacity.norbi930523.manutdapp.util.DateUtils;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import timber.log.Timber;
 
 
 public class DataLoaderIntentService extends IntentService {
+
+    private static final String NEWS_LAST_UPDATE_KEY = "newsLastUpdate";
 
     private static final String ACTION_LOAD_NEWS = "com.udacity.norbi930523.manutdapp.network.action.LOAD_NEWS";
     private static final String ACTION_LOAD_PLAYERS = "com.udacity.norbi930523.manutdapp.network.action.LOAD_PLAYERS";
@@ -99,13 +105,13 @@ public class DataLoaderIntentService extends IntentService {
 
         List<ArticleVO> articles = null;
         try {
-            articles = manutdApiService.news().execute().getItems();
+            articles = manutdApiService.news(getNewsLastUpdate()).execute().getItems();
         } catch (IOException e) {
             Timber.e(e, "Failed to load news from API");
             return;
         }
 
-        getContentResolver().delete(NewsProvider.News.NEWS, null, null);
+        updateNewsLastUpdate();
 
         ContentValues[] values = new ContentValues[articles.size()];
         for(int i = 0; i < articles.size(); i++){
@@ -124,6 +130,26 @@ public class DataLoaderIntentService extends IntentService {
         }
 
         getContentResolver().bulkInsert(NewsProvider.News.NEWS, values);
+    }
+
+    private DateTime getNewsLastUpdate(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        long lastUpdateMillis = sharedPreferences.getLong(NEWS_LAST_UPDATE_KEY, 0L);
+
+        return new DateTime(lastUpdateMillis);
+    }
+
+    private void updateNewsLastUpdate(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Date now = new Date();
+
+        sharedPreferences
+                .edit()
+                .putLong(NEWS_LAST_UPDATE_KEY, now.getTime())
+                .apply();
+
     }
 
     private void handleActionLoadPlayers() {

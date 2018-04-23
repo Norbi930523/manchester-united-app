@@ -10,6 +10,8 @@ import com.udacity.norbi930523.manutdapp.backend.parser.FixturesJsonParser;
 import com.udacity.norbi930523.manutdapp.backend.parser.NewsJsonParser;
 import com.udacity.norbi930523.manutdapp.backend.parser.PlayersJsonParser;
 
+import java.util.Date;
+
 import javax.inject.Named;
 
 /** An endpoint class we are exposing */
@@ -34,8 +36,8 @@ public class ManUtdEndpoint {
     }
 
     @ApiMethod(name = "news", httpMethod = "GET")
-    public ArticleVO[] news() {
-        return NewsJsonParser.getInstance().getJson();
+    public ArticleVO[] news(@Named("lastUpdate") Date lastUpdate) {
+        return NewsJsonParser.getInstance().getJson(lastUpdate);
     }
 
     @ApiMethod(name = "players", httpMethod = "GET")
