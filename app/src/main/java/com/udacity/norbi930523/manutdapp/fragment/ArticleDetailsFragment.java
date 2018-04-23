@@ -149,6 +149,8 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
 
         Picasso.with(getContext())
                 .load(imageUrl)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
                 .into(articleImage);
     }
 }

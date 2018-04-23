@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.udacity.norbi930523.manutdapp.R;
@@ -32,6 +33,9 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     private static final String LIST_STATE_KEY = "listState";
 
     private static final int NEWS_LOADER_ID = 100;
+
+    @BindView(R.id.articleListContainer)
+    FrameLayout articleListContainer;
 
     @BindView(R.id.loadingIndicator)
     ProgressBar loadingIndicator;
@@ -96,7 +100,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
             if(NetworkUtils.isOnline(getContext())){
                 DataLoaderIntentService.startActionLoadNews(getContext());
             } else {
-                Snackbar.make(newsRecyclerView, R.string.is_offline, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(articleListContainer, R.string.is_offline, Snackbar.LENGTH_LONG).show();
             }
 
         } else {
