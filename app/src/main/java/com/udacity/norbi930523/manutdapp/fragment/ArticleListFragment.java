@@ -1,7 +1,10 @@
 package com.udacity.norbi930523.manutdapp.fragment;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -92,12 +95,12 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     }
 
     private void loadNews(boolean initLoader){
-        loadingIndicator.setVisibility(View.VISIBLE);
-
         if(initLoader){
             getActivity().getSupportLoaderManager().initLoader(NEWS_LOADER_ID, null, this);
 
             if(NetworkUtils.isOnline(getContext())){
+                getContext().registerReceiver(loadingStateChangeReceiver, new IntentFilter(DataLoaderIntentService.BROADCAST_ACTION_STATE_CHANGE));
+
                 DataLoaderIntentService.startActionLoadNews(getContext());
             } else {
                 Snackbar.make(articleListContainer, R.string.is_offline, Snackbar.LENGTH_LONG).show();
@@ -109,6 +112,26 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     }
 
+    private BroadcastReceiver loadingStateChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(DataLoaderIntentService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())){
+                boolean isLoading = intent.getBooleanExtra(DataLoaderIntentService.BROADCAST_EXTRA_IS_LOADING, false);
+
+                toggleLoadingIndicator(isLoading);
+
+                if(!isLoading){
+                    /* Unregister the receiver when finished loading data */
+                    getContext().unregisterReceiver(this);
+                }
+            }
+        }
+
+        private void toggleLoadingIndicator(final boolean isLoading){
+            loadingIndicator.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        }
+    };
+
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
@@ -117,8 +140,6 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        loadingIndicator.setVisibility(View.GONE);
-
         newsAdapter.swapCursor(data);
 
         /* Restore saved state if there is any */

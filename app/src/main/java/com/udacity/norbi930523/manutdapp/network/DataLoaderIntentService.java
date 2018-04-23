@@ -30,6 +30,9 @@ import timber.log.Timber;
 
 public class DataLoaderIntentService extends IntentService {
 
+    public static final String BROADCAST_ACTION_STATE_CHANGE = "DataLoaderIntentService.STATE_CHANGE";
+    public static final String BROADCAST_EXTRA_IS_LOADING = "DataLoaderIntentService.IS_LOADING";
+
     private static final String NEWS_LAST_UPDATE_KEY = "newsLastUpdate";
 
     private static final String ACTION_LOAD_NEWS = "com.udacity.norbi930523.manutdapp.network.action.LOAD_NEWS";
@@ -104,6 +107,8 @@ public class DataLoaderIntentService extends IntentService {
             initApiService();
         }
 
+        broadcastStateChange(true);
+
         List<ArticleVO> articles = loadArticlesFromServer();
 
         if(articles == null){
@@ -129,6 +134,8 @@ public class DataLoaderIntentService extends IntentService {
         }
 
         getContentResolver().bulkInsert(NewsProvider.News.NEWS, values);
+
+        broadcastStateChange(false);
     }
 
     private List<ArticleVO> loadArticlesFromServer(){
@@ -170,5 +177,12 @@ public class DataLoaderIntentService extends IntentService {
 
     private void handleActionLoadFixtures() {
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private void broadcastStateChange(boolean isLoading){
+        Intent stateChange = new Intent(BROADCAST_ACTION_STATE_CHANGE);
+        stateChange.putExtra(BROADCAST_EXTRA_IS_LOADING, isLoading);
+
+        sendBroadcast(stateChange);
     }
 }
