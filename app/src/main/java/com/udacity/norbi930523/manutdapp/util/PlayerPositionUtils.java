@@ -1,5 +1,7 @@
 package com.udacity.norbi930523.manutdapp.util;
 
+import com.udacity.norbi930523.manutdapp.R;
+
 public class PlayerPositionUtils {
 
     public static final int GOALKEEPER = 1;
@@ -21,6 +23,21 @@ public class PlayerPositionUtils {
         } else {
             throw new IllegalArgumentException("Unknown position: " + positionStr);
         }
+    }
+
+    public static int getCategoryTitleForPosition(int position){
+        switch (position){
+            case GOALKEEPER:
+                return R.string.category_goalkeepers;
+            case DEFENDER:
+                return R.string.category_defenders;
+            case MIDFIELDER:
+                return R.string.category_midfielders;
+            case FORWARD:
+                return R.string.category_forwards;
+        }
+
+        return 0;
     }
 
 }

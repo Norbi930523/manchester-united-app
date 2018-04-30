@@ -10,6 +10,10 @@
 
     <!-- Players -->
     <string name="player_name_pattern"><![CDATA[<b>#%1$d</b> %2$s]]></string>
+    <string name="category_goalkeepers">GOALKEEPERS</string>
+    <string name="category_defenders">DEFENDERS</string>
+    <string name="category_midfielders">MIDFIELDERS</string>
+    <string name="category_forwards">FORWARDS</string>
 
     <!-- Bottom Navigation View -->
     <string name="title_news">News</string>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/positionCategoryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:paddingLeft="@dimen/spacing_medium"
+        android:paddingStart="@dimen/spacing_medium"
+        android:paddingRight="@dimen/spacing_medium"
+        android:paddingEnd="@dimen/spacing_medium"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/colorPrimaryDark"/>
+
+    <include layout="@layout/player_list_item" />
+
+</LinearLayout>

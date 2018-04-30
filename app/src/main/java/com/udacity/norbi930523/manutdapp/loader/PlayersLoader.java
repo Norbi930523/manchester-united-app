@@ -19,7 +19,8 @@ public class PlayersLoader extends CursorLoader {
             PlayerColumns._ID,
             PlayerColumns.SQUAD_NUMBER,
             PlayerColumns.LAST_NAME,
-            ArticleColumns.IMAGE_URL
+            PlayerColumns.IMAGE_URL,
+            PlayerColumns.POSITION
     };
 
     public static PlayersLoader allPlayers(Context context){
