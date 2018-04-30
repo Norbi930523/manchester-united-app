@@ -67,10 +67,12 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if(context instanceof ArticleListItemClickListener){
-            newsAdapter = new NewsRecyclerViewAdapter(context, (ArticleListItemClickListener) context);
+        Fragment parent = getParentFragment();
+
+        if(parent instanceof ArticleListItemClickListener){
+            newsAdapter = new NewsRecyclerViewAdapter(context, (ArticleListItemClickListener) parent);
         } else {
-            throw new RuntimeException("Parent activity must implement ArticleListItemClickListener");
+            throw new RuntimeException("Parent must implement ArticleListItemClickListener");
         }
     }
 

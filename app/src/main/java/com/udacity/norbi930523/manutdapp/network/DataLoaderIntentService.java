@@ -112,6 +112,7 @@ public class DataLoaderIntentService extends IntentService {
         List<ArticleVO> articles = loadArticlesFromServer();
 
         if(articles == null){
+            broadcastStateChange(false);
             return;
         }
 

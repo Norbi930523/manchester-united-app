@@ -22,17 +22,16 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activity.NewsActivity"
-            android:label="@string/news_title"
+        <activity android:name=".activity.MainActivity"
             android:launchMode="singleTop"/>
 
-        <activity android:name=".activity.ArticleDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".activity.NewsActivity">
-
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.NewsActivity"/>
+        <activity
+            android:name=".activity.ArticleDetailsActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity" />
         </activity>
 
         <service
@@ -43,7 +42,6 @@
             android:name=".database.generated.NewsProvider"
             android:authorities="com.udacity.norbi930523.manutdapp.news"
             android:exported="false" />
-
     </application>
 
 </manifest>
