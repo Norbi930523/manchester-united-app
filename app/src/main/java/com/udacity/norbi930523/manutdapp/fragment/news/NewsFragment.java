@@ -1,4 +1,4 @@
-package com.udacity.norbi930523.manutdapp.fragment;
+package com.udacity.norbi930523.manutdapp.fragment.news;
 
 
 import android.content.Intent;
@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.udacity.norbi930523.manutdapp.R;
-import com.udacity.norbi930523.manutdapp.activity.ArticleDetailsActivity;
+import com.udacity.norbi930523.manutdapp.activity.news.ArticleDetailsActivity;
 
 public class NewsFragment extends Fragment implements ArticleListFragment.ArticleListItemClickListener {
 

@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.preference.PreferenceManager;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -16,10 +17,14 @@ import com.udacity.norbi930523.manutdapp.BuildConfig;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.backend.manutd.Manutd;
 import com.udacity.norbi930523.manutdapp.backend.manutd.model.ArticleVO;
+import com.udacity.norbi930523.manutdapp.backend.manutd.model.PlayerVO;
 import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
 import com.udacity.norbi930523.manutdapp.database.news.NewsProvider;
+import com.udacity.norbi930523.manutdapp.database.players.PlayerColumns;
+import com.udacity.norbi930523.manutdapp.database.players.PlayersProvider;
 import com.udacity.norbi930523.manutdapp.util.DateUtils;
 import com.udacity.norbi930523.manutdapp.util.NetworkUtils;
+import com.udacity.norbi930523.manutdapp.util.PlayerPositionUtils;
 
 import java.io.IOException;
 import java.util.Date;
@@ -173,7 +178,84 @@ public class DataLoaderIntentService extends IntentService {
     }
 
     private void handleActionLoadPlayers() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if(manutdApiService == null){
+            initApiService();
+        }
+
+        broadcastStateChange(true);
+
+        List<PlayerVO> players = loadPlayersFromServer();
+
+        if(players == null){
+            broadcastStateChange(false);
+            return;
+        }
+
+        Date now = new Date();
+
+        for(int i = 0; i < players.size(); i++){
+            PlayerVO player = players.get(i);
+
+            ContentValues cv = new ContentValues();
+            cv.put(PlayerColumns._ID, player.getId());
+            cv.put(PlayerColumns.APPEARANCES, player.getAppearances());
+            cv.put(PlayerColumns.BIRTHDATE, player.getBirthdate());
+            cv.put(PlayerColumns.BIRTHPLACE, player.getBirthplace());
+            cv.put(PlayerColumns.FIRST_NAME, player.getFirstName());
+            cv.put(PlayerColumns.GOALS, player.getGoals());
+            cv.put(PlayerColumns.IMAGE_URL, player.getImageUrl());
+            cv.put(PlayerColumns.INTERNATIONAL, player.getInternational());
+            cv.put(PlayerColumns.JOINED, player.getJoined());
+            cv.put(PlayerColumns.JOINED_FROM, player.getJoinedFrom());
+            cv.put(PlayerColumns.LAST_NAME, player.getLastName());
+            cv.put(PlayerColumns.POSITION, PlayerPositionUtils.valueOf(player.getPosition()));
+            cv.put(PlayerColumns.SQUAD_NUMBER, player.getSquadNumber());
+            cv.put(PlayerColumns.LAST_UPDATE, now.getTime());
+
+            if(isExistingPlayer(player.getId())){
+                getContentResolver().update(PlayersProvider.Players.withId(player.getId()), cv, null, null);
+            } else {
+                getContentResolver().insert(PlayersProvider.Players.PLAYERS, cv);
+            }
+        }
+
+        /* Delete players that were not present in the json, based on their last update time */
+        deleteMissingPlayers(now.getTime());
+
+        broadcastStateChange(false);
+    }
+
+    private void deleteMissingPlayers(long nowInMillis) {
+        getContentResolver().delete(
+                PlayersProvider.Players.PLAYERS,
+                PlayerColumns.LAST_UPDATE + " < ?",
+                new String[]{ String.valueOf(nowInMillis) }
+        );
+    }
+
+    private List<PlayerVO> loadPlayersFromServer(){
+        if(NetworkUtils.isOffline(this)){
+            return null;
+        }
+
+        try {
+            return manutdApiService.players().execute().getItems();
+        } catch (IOException e) {
+            Timber.e(e, "Failed to load players from API");
+            return null;
+        }
+    }
+
+    private boolean isExistingPlayer(Long playerId){
+        Cursor cursor = getContentResolver().query(
+                PlayersProvider.Players.withId(playerId),
+                new String[]{ PlayerColumns._ID },
+                null,
+                null,
+                null
+        );
+
+        return cursor != null && cursor.getCount() > 0;
     }
 
     private void handleActionLoadFixtures() {

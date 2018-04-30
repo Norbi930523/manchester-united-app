@@ -4,9 +4,9 @@
     android:layout_height="match_parent">
 
     <fragment
-        android:id="@+id/articleListFragment"
+        android:id="@+id/playerListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.udacity.norbi930523.manutdapp.fragment.news.ArticleListFragment"/>
+        android:name="com.udacity.norbi930523.manutdapp.fragment.players.PlayerListFragment"/>
 
 </FrameLayout>

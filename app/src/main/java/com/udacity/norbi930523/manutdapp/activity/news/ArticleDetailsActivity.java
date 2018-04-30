@@ -1,10 +1,10 @@
-package com.udacity.norbi930523.manutdapp.activity;
+package com.udacity.norbi930523.manutdapp.activity.news;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.udacity.norbi930523.manutdapp.R;
-import com.udacity.norbi930523.manutdapp.fragment.ArticleDetailsFragment;
+import com.udacity.norbi930523.manutdapp.fragment.news.ArticleDetailsFragment;
 
 public class ArticleDetailsActivity extends AppCompatActivity {
 

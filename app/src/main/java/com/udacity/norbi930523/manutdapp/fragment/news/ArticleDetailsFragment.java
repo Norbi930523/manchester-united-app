@@ -1,8 +1,7 @@
-package com.udacity.norbi930523.manutdapp.fragment;
+package com.udacity.norbi930523.manutdapp.fragment.news;
 
 
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +10,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
 import com.udacity.norbi930523.manutdapp.loader.NewsLoader;
+import com.udacity.norbi930523.manutdapp.util.TextUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,12 +106,7 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
 
             articleSummary.setText(summary);
 
-            /* https://stackoverflow.com/a/2116191 */
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-                articleContent.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT));
-            } else {
-                articleContent.setText(Html.fromHtml(content));
-            }
+            TextUtils.setHtmlText(articleContent, content);
 
         } else {
             Toast.makeText(getContext(), R.string.article_not_found, Toast.LENGTH_LONG).show();

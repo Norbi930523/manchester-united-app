@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
-import com.udacity.norbi930523.manutdapp.fragment.ArticleListFragment;
+import com.udacity.norbi930523.manutdapp.fragment.news.ArticleListFragment;
 import com.udacity.norbi930523.manutdapp.util.DateUtils;
 
 import butterknife.BindView;

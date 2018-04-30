@@ -16,9 +16,13 @@ public class PlayerVO {
 
     private String birthplace;
 
+    private String position;
+
     private String joined;
 
     private String joinedFrom;
+
+    private String international;
 
     private Integer appearances;
 
@@ -110,5 +114,21 @@ public class PlayerVO {
 
     public void setGoals(Integer goals) {
         this.goals = goals;
+    }
+
+    public String getInternational() {
+        return international;
+    }
+
+    public void setInternational(String international) {
+        this.international = international;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }

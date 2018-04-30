@@ -1,4 +1,4 @@
-package com.udacity.norbi930523.manutdapp.fragment;
+package com.udacity.norbi930523.manutdapp.fragment.news;
 
 
 import android.content.BroadcastReceiver;

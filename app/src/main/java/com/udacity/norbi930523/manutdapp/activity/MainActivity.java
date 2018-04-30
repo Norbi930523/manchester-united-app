@@ -9,15 +9,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.udacity.norbi930523.manutdapp.R;
-import com.udacity.norbi930523.manutdapp.fragment.NewsFragment;
+import com.udacity.norbi930523.manutdapp.fragment.news.NewsFragment;
+import com.udacity.norbi930523.manutdapp.fragment.players.PlayersFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String SELECTED_MENU_ID_KEY = "selectedMenuId";
+
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
+
+    private int selectedMenuId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +32,26 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navigation_news);
+
+        initSelectedMenu(savedInstanceState);
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(SELECTED_MENU_ID_KEY, selectedMenuId);
+    }
+
+    private void initSelectedMenu(Bundle savedInstanceState){
+        if(savedInstanceState == null){
+            selectedMenuId = R.id.navigation_news;
+        } else {
+            selectedMenuId = savedInstanceState.getInt(SELECTED_MENU_ID_KEY);
+        }
+
+        navigation.setSelectedItemId(selectedMenuId);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
@@ -53,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.contentContainer, getFragmentBySelectedMenu(selectedMenuId))
                 .commit();
+
+        this.selectedMenuId = selectedMenuId;
     }
 
     private Fragment getFragmentBySelectedMenu(int selectedMenuId){
@@ -60,11 +86,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigation_news:
                 return NewsFragment.newInstance();
             case R.id.navigation_players:
+                return PlayersFragment.newInstance();
             case R.id.navigation_fixtures:
                 return null;
         }
 
-        throw new RuntimeException("Unhandled menu item!");
+        throw new IllegalArgumentException("Unhandled menu item!");
     }
 
 }
