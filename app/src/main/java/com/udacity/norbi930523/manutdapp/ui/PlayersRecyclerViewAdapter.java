@@ -80,8 +80,9 @@ public class PlayersRecyclerViewAdapter extends RecyclerView.Adapter<PlayersRecy
 
         Picasso.with(context)
                 .load(imageUrl)
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
+                .placeholder(R.drawable.placeholder_circle)
+                .error(R.drawable.placeholder_circle)
+                .transform(CircleImageTransformation.getInstance())
                 .into(holder.playerImage);
     }
 
