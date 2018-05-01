@@ -61,6 +61,9 @@ public class PlayerDetailsFragment extends Fragment implements LoaderManager.Loa
     @BindView(R.id.goals)
     TextView goals;
 
+    @BindView(R.id.bio)
+    TextView bio;
+
     private Long playerId;
 
     public PlayerDetailsFragment() {
@@ -122,6 +125,7 @@ public class PlayerDetailsFragment extends Fragment implements LoaderManager.Loa
             String international = cursor.getString(cursor.getColumnIndex(PlayerColumns.INTERNATIONAL));
             int appearances = cursor.getInt(cursor.getColumnIndex(PlayerColumns.APPEARANCES));
             int goals = cursor.getInt(cursor.getColumnIndex(PlayerColumns.GOALS));
+            String bio = cursor.getString(cursor.getColumnIndex(PlayerColumns.BIO));
 
             int positionId = cursor.getInt(cursor.getColumnIndex(PlayerColumns.POSITION));
             String position = PlayerPositionUtils.toString(getContext(), positionId);
@@ -137,6 +141,7 @@ public class PlayerDetailsFragment extends Fragment implements LoaderManager.Loa
             TextUtils.setHtmlText(this.international, getString(R.string.player_info_international, international));
             TextUtils.setHtmlText(this.appearances, getString(R.string.player_info_appearances, appearances));
             TextUtils.setHtmlText(this.goals, getString(R.string.player_info_goals, goals));
+            TextUtils.setHtmlText(this.bio, bio);
 
         } else {
             Toast.makeText(getContext(), R.string.player_not_found, Toast.LENGTH_LONG).show();

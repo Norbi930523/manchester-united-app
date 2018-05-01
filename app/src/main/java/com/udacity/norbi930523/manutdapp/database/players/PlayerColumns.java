@@ -45,6 +45,9 @@ public interface PlayerColumns {
     @DataType(DataType.Type.INTEGER)
     String GOALS = "goals";
 
+    @DataType(DataType.Type.TEXT)
+    String BIO = "bio";
+
     @DataType(DataType.Type.INTEGER)
     String LAST_UPDATE = "last_update";
 

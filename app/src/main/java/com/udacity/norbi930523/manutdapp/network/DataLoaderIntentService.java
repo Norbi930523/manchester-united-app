@@ -210,6 +210,7 @@ public class DataLoaderIntentService extends IntentService {
             cv.put(PlayerColumns.LAST_NAME, player.getLastName());
             cv.put(PlayerColumns.POSITION, PlayerPositionUtils.valueOf(this, player.getPosition()));
             cv.put(PlayerColumns.SQUAD_NUMBER, player.getSquadNumber());
+            cv.put(PlayerColumns.BIO, player.getBio());
             cv.put(PlayerColumns.LAST_UPDATE, now.getTime());
 
             if(isExistingPlayer(player.getId())){

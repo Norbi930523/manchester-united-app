@@ -27,7 +27,8 @@ public class PlayersLoader extends CursorLoader {
             PlayerColumns.JOINED_FROM,
             PlayerColumns.INTERNATIONAL,
             PlayerColumns.APPEARANCES,
-            PlayerColumns.GOALS
+            PlayerColumns.GOALS,
+            PlayerColumns.BIO
     };
 
     private static final String[] PROJECTION_LIST = {
