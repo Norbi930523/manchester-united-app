@@ -50,13 +50,18 @@ public class PlayersRecyclerViewAdapter extends RecyclerView.Adapter<PlayersRecy
     public PlayerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-        View playerListItem = null;
+        /* Normal player item layout without title */
+        int layout = R.layout.player_list_item;
 
-        if(viewType == 0){
-            playerListItem = layoutInflater.inflate(R.layout.player_list_item, parent, false);
-        } else {
-            playerListItem = layoutInflater.inflate(R.layout.titled_player_list_item, parent, false);
+        if(viewType == 1){
+            /* Player item layout with a title and without a large top margin */
+            layout = R.layout.top_titled_player_list_item;
+        } else if(viewType > 1){
+            /* Player item layout with a title and with a large top margin to separate the categories */
+            layout = R.layout.titled_player_list_item;
         }
+
+        View playerListItem = layoutInflater.inflate(layout, parent, false);
 
         return new PlayerViewHolder(playerListItem, viewType);
     }

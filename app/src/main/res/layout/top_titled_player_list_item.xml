@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginTop="@dimen/spacing_large">
+    android:layout_marginTop="@dimen/spacing_medium">
 
     <include layout="@layout/position_category_title" />
 
