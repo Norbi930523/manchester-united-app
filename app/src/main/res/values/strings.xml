@@ -10,10 +10,27 @@
 
     <!-- Players -->
     <string name="player_name_pattern"><![CDATA[<b>#%1$d</b> %2$s]]></string>
+
     <string name="category_goalkeepers">GOALKEEPERS</string>
     <string name="category_defenders">DEFENDERS</string>
     <string name="category_midfielders">MIDFIELDERS</string>
     <string name="category_forwards">FORWARDS</string>
+
+    <string name="position_goalkeeper">Goalkeeper</string>
+    <string name="position_defender">Defender</string>
+    <string name="position_midfielder">Midfielder</string>
+    <string name="position_forward">Forward</string>
+
+    <string name="player_not_found">Could not find the selected player!</string>
+    <string name="player_image_transition">playerImageTransition</string>
+
+    <string name="player_info_squad_number"><![CDATA[<b>Squad number:</b> %1$d]]></string>
+    <string name="player_info_birthdate"><![CDATA[<b>Date of birth:</b> %1$s, in %2$s]]></string>
+    <string name="player_info_position"><![CDATA[<b>Position:</b> %1$s]]></string>
+    <string name="player_info_joined"><![CDATA[<b>Joined:</b> %1$s, from %2$s]]></string>
+    <string name="player_info_international"><![CDATA[<b>International:</b> %1$s]]></string>
+    <string name="player_info_appearances"><![CDATA[<b>Appearances:</b> %1$d]]></string>
+    <string name="player_info_goals"><![CDATA[<b>Goals:</b> %1$d]]></string>
 
     <!-- Bottom Navigation View -->
     <string name="title_news">News</string>

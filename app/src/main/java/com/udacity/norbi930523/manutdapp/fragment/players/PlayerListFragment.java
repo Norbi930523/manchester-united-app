@@ -37,7 +37,7 @@ public class PlayerListFragment extends Fragment implements LoaderManager.Loader
 
     private static final String LIST_STATE_KEY = "listState";
 
-    private static final int PLAYERS_LOADER_ID = 101;
+    private static final int PLAYERS_LOADER_ID = 200;
 
     @BindView(R.id.playerListContainer)
     FrameLayout playerListContainer;

@@ -1,5 +1,7 @@
 package com.udacity.norbi930523.manutdapp.util;
 
+import android.content.Context;
+
 import com.udacity.norbi930523.manutdapp.R;
 
 public class PlayerPositionUtils {
@@ -11,22 +13,22 @@ public class PlayerPositionUtils {
 
     private PlayerPositionUtils(){}
 
-    public static int valueOf(String positionStr){
-        if("Goalkeeper".equalsIgnoreCase(positionStr)){
+    public static int valueOf(Context context, String positionStr){
+        if(context.getString(R.string.position_goalkeeper).equalsIgnoreCase(positionStr)){
             return GOALKEEPER;
-        } else if("Defender".equalsIgnoreCase(positionStr)){
+        } else if(context.getString(R.string.position_defender).equalsIgnoreCase(positionStr)){
             return DEFENDER;
-        } else if("Midfielder".equalsIgnoreCase(positionStr)){
+        } else if(context.getString(R.string.position_midfielder).equalsIgnoreCase(positionStr)){
             return MIDFIELDER;
-        } else if("Forward".equalsIgnoreCase(positionStr)){
+        } else if(context.getString(R.string.position_forward).equalsIgnoreCase(positionStr)){
             return FORWARD;
         } else {
             throw new IllegalArgumentException("Unknown position: " + positionStr);
         }
     }
 
-    public static int getCategoryTitleForPosition(int position){
-        switch (position){
+    public static int getCategoryTitleForPosition(int positionId){
+        switch (positionId){
             case GOALKEEPER:
                 return R.string.category_goalkeepers;
             case DEFENDER:
@@ -40,4 +42,18 @@ public class PlayerPositionUtils {
         return 0;
     }
 
+    public static String toString(Context context, int positionId) {
+        switch (positionId){
+            case GOALKEEPER:
+                return context.getString(R.string.position_goalkeeper);
+            case DEFENDER:
+                return context.getString(R.string.position_defender);
+            case MIDFIELDER:
+                return context.getString(R.string.position_midfielder);
+            case FORWARD:
+                return context.getString(R.string.position_forward);
+        }
+
+        return null;
+    }
 }

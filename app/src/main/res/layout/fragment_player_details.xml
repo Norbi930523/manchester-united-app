@@ -21,11 +21,11 @@
             app:contentScrim="?attr/colorPrimary">
 
             <ImageView
-                android:id="@+id/articleImage"
+                android:id="@+id/playerImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:transitionName="@string/article_image_transition"
+                android:transitionName="@string/player_image_transition"
                 android:foreground="@drawable/scrim_bottom_to_top"
                 app:layout_collapseMode="parallax" />
 
@@ -53,25 +53,60 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/spacing_medium">
+            android:paddingLeft="@dimen/spacing_medium"
+            android:paddingStart="@dimen/spacing_medium"
+            android:paddingRight="@dimen/spacing_medium"
+            android:paddingEnd="@dimen/spacing_medium"
+            android:paddingTop="@dimen/spacing_medium">
 
             <TextView
-                android:id="@+id/articleSummary"
+                android:id="@+id/squadNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:textSize="@dimen/font_medium"
-                android:layout_marginBottom="@dimen/spacing_medium"
-                android:freezesText="true"/>
+                android:freezesText="true"
+                style="@style/PlayerInfoItem"/>
 
             <TextView
-                android:id="@+id/articleContent"
+                android:id="@+id/birthdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/font_medium"
-                android:freezesText="true"/>
+                android:freezesText="true"
+                style="@style/PlayerInfoItem"/>
+
+            <TextView
+                android:id="@+id/position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                style="@style/PlayerInfoItem"/>
+
+            <TextView
+                android:id="@+id/joined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                style="@style/PlayerInfoItem"/>
+
+            <TextView
+                android:id="@+id/international"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                style="@style/PlayerInfoItem"/>
+
+            <TextView
+                android:id="@+id/appearances"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                style="@style/PlayerInfoItem"/>
+
+            <TextView
+                android:id="@+id/goals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:freezesText="true"
+                style="@style/PlayerInfoItem"/>
 
         </LinearLayout>
 

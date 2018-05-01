@@ -1,15 +1,18 @@
 package com.udacity.norbi930523.manutdapp.fragment.players;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.udacity.norbi930523.manutdapp.R;
+import com.udacity.norbi930523.manutdapp.activity.players.PlayerDetailsActivity;
 
 public class PlayersFragment extends Fragment implements PlayerListFragment.PlayerListItemClickListener {
 
@@ -36,6 +39,13 @@ public class PlayersFragment extends Fragment implements PlayerListFragment.Play
 
     @Override
     public void onPlayerClick(Long playerId, View sharedElement) {
+        Intent playerDetailsIntent = new Intent(getContext(), PlayerDetailsActivity.class);
+        playerDetailsIntent.putExtra(PlayerDetailsActivity.PLAYER_ID_PARAM, playerId);
 
+        /* https://guides.codepath.com/android/shared-element-activity-transition */
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), sharedElement, getString(R.string.player_image_transition));
+
+        startActivity(playerDetailsIntent, options.toBundle());
     }
 }

@@ -13,7 +13,22 @@ import com.udacity.norbi930523.manutdapp.database.players.PlayersProvider;
 
 public class PlayersLoader extends CursorLoader {
 
-    private static final String[] PROJECTION_DETAIL = {};
+    private static final String[] PROJECTION_DETAIL = {
+            PlayerColumns._ID,
+            PlayerColumns.SQUAD_NUMBER,
+            PlayerColumns.LAST_NAME,
+            PlayerColumns.FIRST_NAME,
+            PlayerColumns.IMAGE_URL,
+            PlayerColumns.POSITION,
+            PlayerColumns.SQUAD_NUMBER,
+            PlayerColumns.BIRTHDATE,
+            PlayerColumns.BIRTHPLACE,
+            PlayerColumns.JOINED,
+            PlayerColumns.JOINED_FROM,
+            PlayerColumns.INTERNATIONAL,
+            PlayerColumns.APPEARANCES,
+            PlayerColumns.GOALS
+    };
 
     private static final String[] PROJECTION_LIST = {
             PlayerColumns._ID,
