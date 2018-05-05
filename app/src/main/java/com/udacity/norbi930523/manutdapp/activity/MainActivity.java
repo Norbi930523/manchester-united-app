@@ -17,12 +17,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String SELECTED_MENU_ID_KEY = "selectedMenuId";
-
     @BindView(R.id.navigation)
     BottomNavigationView navigation;
-
-    private int selectedMenuId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,25 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
-        initSelectedMenu(savedInstanceState);
-
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putInt(SELECTED_MENU_ID_KEY, selectedMenuId);
-    }
-
-    private void initSelectedMenu(Bundle savedInstanceState){
         if(savedInstanceState == null){
-            selectedMenuId = R.id.navigation_news;
-        } else {
-            selectedMenuId = savedInstanceState.getInt(SELECTED_MENU_ID_KEY);
+            navigation.setSelectedItemId(R.id.navigation_news);
         }
 
-        navigation.setSelectedItemId(selectedMenuId);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
@@ -77,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.contentContainer, getFragmentBySelectedMenu(selectedMenuId))
                 .commit();
-
-        this.selectedMenuId = selectedMenuId;
     }
 
     private Fragment getFragmentBySelectedMenu(int selectedMenuId){
