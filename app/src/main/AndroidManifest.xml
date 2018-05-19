@@ -56,6 +56,11 @@
             android:name=".database.generated.PlayersProvider"
             android:authorities="com.udacity.norbi930523.manutdapp.players"
             android:exported="false" />
+
+        <provider
+            android:name=".database.generated.FixturesProvider"
+            android:authorities="com.udacity.norbi930523.manutdapp.fixtures"
+            android:exported="false" />
     </application>
 
 </manifest>

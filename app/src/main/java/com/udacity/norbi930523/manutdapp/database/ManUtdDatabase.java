@@ -1,5 +1,6 @@
 package com.udacity.norbi930523.manutdapp.database;
 
+import com.udacity.norbi930523.manutdapp.database.fixtures.FixtureColumns;
 import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
 import com.udacity.norbi930523.manutdapp.database.players.PlayerColumns;
 
@@ -14,5 +15,7 @@ public final class ManUtdDatabase {
     @Table(ArticleColumns.class) public static final String ARTICLE = "ARTICLE";
 
     @Table(PlayerColumns.class) public static final String PLAYER = "PLAYER";
+
+    @Table(FixtureColumns.class) public static final String FIXTURE = "FIXTURE";
 
 }

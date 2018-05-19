@@ -339,31 +339,36 @@
   "date": "15/04/2018 16:00",
   "competition": "EPL",
   "opponent": "West Brom Albion",
-  "venue": "H"
+  "venue": "H",
+  "result": "L 0 - 1"
 }, {
   "id": "180420181945",
   "date": "18/04/2018 19:45",
   "competition": "EPL",
   "opponent": "Bournemouth",
-  "venue": "A"
+  "venue": "A",
+  "result": "W 2 - 0"
 }, {
   "id": "210420181715",
   "date": "21/04/2018 17:15",
   "competition": "FAC",
   "opponent": "Tottenham Hotspur",
-  "venue": "N"
+  "venue": "N",
+  "result": "W 2 - 1"
 }, {
   "id": "290420181630",
   "date": "29/04/2018 16:30",
   "competition": "EPL",
   "opponent": "Arsenal",
-  "venue": "H"
+  "venue": "H",
+  "result": "W 2 - 1"
 }, {
   "id": "040520182000",
   "date": "04/05/2018 20:00",
   "competition": "EPL",
   "opponent": "Brighton & Hove Albion",
-  "venue": "A"
+  "venue": "A",
+  "result": "L 0 - 1"
 }, {
   "id": "100520181945",
   "date": "10/05/2018 19:45",
@@ -376,4 +381,10 @@
   "competition": "EPL",
   "opponent": "Watford",
   "venue": "H"
+}, {
+  "id": "190520181715",
+  "date": "19/05/2018 17:15",
+  "competition": "FAC",
+  "opponent": "Chelsea",
+  "venue": "N"
 }]

@@ -17,7 +17,10 @@ import com.udacity.norbi930523.manutdapp.BuildConfig;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.backend.manutd.Manutd;
 import com.udacity.norbi930523.manutdapp.backend.manutd.model.ArticleVO;
+import com.udacity.norbi930523.manutdapp.backend.manutd.model.FixtureVO;
 import com.udacity.norbi930523.manutdapp.backend.manutd.model.PlayerVO;
+import com.udacity.norbi930523.manutdapp.database.fixtures.FixtureColumns;
+import com.udacity.norbi930523.manutdapp.database.fixtures.FixturesProvider;
 import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
 import com.udacity.norbi930523.manutdapp.database.news.NewsProvider;
 import com.udacity.norbi930523.manutdapp.database.players.PlayerColumns;
@@ -152,7 +155,7 @@ public class DataLoaderIntentService extends IntentService {
         try {
             return manutdApiService.news(getNewsLastUpdate()).execute().getItems();
         } catch (IOException e) {
-            Timber.e(e, "Failed to load news from API");
+            Timber.e(e, "Failed to load news from server");
             return null;
         }
     }
@@ -242,7 +245,7 @@ public class DataLoaderIntentService extends IntentService {
         try {
             return manutdApiService.players().execute().getItems();
         } catch (IOException e) {
-            Timber.e(e, "Failed to load players from API");
+            Timber.e(e, "Failed to load players from server");
             return null;
         }
     }
@@ -260,7 +263,77 @@ public class DataLoaderIntentService extends IntentService {
     }
 
     private void handleActionLoadFixtures() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        if(manutdApiService == null){
+            initApiService();
+        }
+
+        broadcastStateChange(true);
+
+        List<FixtureVO> fixtures = loadFixturesFromServer();
+
+        if(fixtures == null){
+            broadcastStateChange(false);
+            return;
+        }
+
+        Date now = new Date();
+
+        for(int i = 0; i < fixtures.size(); i++){
+            FixtureVO fixture = fixtures.get(i);
+
+            ContentValues cv = new ContentValues();
+            cv.put(FixtureColumns._ID, fixture.getId());
+            cv.put(FixtureColumns.COMPETITION, fixture.getCompetition());
+            cv.put(FixtureColumns.DATE, DateUtils.parseDate(fixture.getDate()));
+            cv.put(FixtureColumns.OPPONENT, fixture.getOpponent());
+            cv.put(FixtureColumns.VENUE, fixture.getVenue());
+            cv.put(FixtureColumns.RESULT, fixture.getResult());
+            cv.put(FixtureColumns.LAST_UPDATE, now.getTime());
+
+            if(isExistingFixture(fixture.getId())){
+                getContentResolver().update(FixturesProvider.Fixtures.withId(fixture.getId()), cv, null, null);
+            } else {
+                getContentResolver().insert(FixturesProvider.Fixtures.FIXTURES, cv);
+            }
+        }
+
+        /* Delete fixtures that were not present in the json, based on their last update time */
+        deleteMissingFixtures(now.getTime());
+
+        broadcastStateChange(false);
+    }
+
+    private List<FixtureVO> loadFixturesFromServer(){
+        if(NetworkUtils.isOffline(this)){
+            return null;
+        }
+
+        try {
+            return manutdApiService.fixtures().execute().getItems();
+        } catch (IOException e) {
+            Timber.e(e, "Failed to load fixtures from server");
+            return null;
+        }
+    }
+
+    private boolean isExistingFixture(String fixtureId){
+        Cursor cursor = getContentResolver().query(
+                FixturesProvider.Fixtures.withId(fixtureId),
+                new String[]{ FixtureColumns._ID },
+                null,
+                null,
+                null
+        );
+
+        return cursor != null && cursor.getCount() > 0;
+    }
+
+    private void deleteMissingFixtures(long nowInMillis) {
+        getContentResolver().delete(
+                FixturesProvider.Fixtures.FIXTURES,
+                FixtureColumns.LAST_UPDATE + " < ?",
+                new String[]{ String.valueOf(nowInMillis) }
+        );
     }
 
     private void broadcastStateChange(boolean isLoading){

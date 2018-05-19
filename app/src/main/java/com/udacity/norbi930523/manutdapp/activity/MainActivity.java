@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.udacity.norbi930523.manutdapp.R;
+import com.udacity.norbi930523.manutdapp.fragment.fixtures.FixturesFragment;
 import com.udacity.norbi930523.manutdapp.fragment.news.NewsFragment;
 import com.udacity.norbi930523.manutdapp.fragment.players.PlayersFragment;
 
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigation_players:
                 return PlayersFragment.newInstance();
             case R.id.navigation_fixtures:
-                return null;
+                return FixturesFragment.newInstance();
         }
 
         throw new IllegalArgumentException("Unhandled menu item!");
