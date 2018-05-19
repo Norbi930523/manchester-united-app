@@ -1,390 +1,390 @@
 [{
   "id": "080820171945",
   "date": "08/08/2017 19:45",
-  "competition": "USC",
+  "competition": "UEFA Super Cup",
   "opponent": "Real Madrid",
   "venue": "N",
   "result": "L 1 - 2"
 }, {
   "id": "130820171600",
   "date": "13/08/2017 16:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "West Ham United",
   "venue": "H",
   "result": "W 4 - 0"
 }, {
   "id": "190820171230",
   "date": "19/08/2017 12:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Swansea City",
   "venue": "A",
   "result": "W 4 - 0"
 }, {
   "id": "260820171730",
   "date": "26/08/2017 17:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Leicester City",
   "venue": "H",
   "result": "W 2 - 0"
 }, {
   "id": "090920171730",
   "date": "09/09/2017 17:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Stoke City",
   "venue": "A",
   "result": "D 2 - 2"
 }, {
   "id": "120920171945",
   "date": "12/09/2017 19:45",
-  "competition": "UCL",
+  "competition": "UEFA Champions League",
   "opponent": "FC Basel",
   "venue": "H",
   "result": "W 3 - 0"
 }, {
   "id": "170920171600",
   "date": "17/09/2017 16:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Everton",
   "venue": "H",
   "result": "W 4 - 0"
 }, {
   "id": "200920172000",
   "date": "20/09/2017 20:00",
-  "competition": "LC",
+  "competition": "Carabao Cup",
   "opponent": "Burton Albion",
   "venue": "H",
   "result": "W 4 - 1"
 }, {
   "id": "230920171500",
   "date": "23/09/2017 15:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Southampton",
   "venue": "A",
   "result": "W 1 - 0"
 }, {
   "id": "270920171945",
   "date": "27/09/2017 19:45",
-  "competition": "UCL",
+  "competition": "UEFA Champions League",
   "opponent": "CSKA Moscow",
   "venue": "A",
   "result": "W 4 - 1"
 }, {
   "id": "300920171500",
   "date": "30/09/2017 15:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Crystal Palace",
   "venue": "H",
   "result": "W 4 - 0"
 }, {
   "id": "141020171230",
   "date": "14/10/2017 12:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Liverpool",
   "venue": "A",
   "result": "D 0 - 0"
 }, {
   "id": "181020171945",
   "date": "18/10/2017 19:45",
-  "competition": "UCL",
+  "competition": "UEFA Champions League",
   "opponent": "Benfica",
   "venue": "A",
   "result": "W 1 - 0"
 }, {
   "id": "211020171500",
   "date": "21/10/2017 15:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Huddersfield Town",
   "venue": "A",
   "result": "L 1 - 2"
 }, {
   "id": "241020171945",
   "date": "24/10/2017 19:45",
-  "competition": "LC",
+  "competition": "Carabao Cup",
   "opponent": "Swansea City",
   "venue": "A",
   "result": "W 2 - 0"
 }, {
   "id": "281020171230",
   "date": "28/10/2017 12:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Tottenham Hotspur",
   "venue": "H",
   "result": "W 1 - 0"
 }, {
   "id": "311020171945",
   "date": "31/10/2017 19:45",
-  "competition": "UCL",
+  "competition": "UEFA Champions League",
   "opponent": "Benfica",
   "venue": "H",
   "result": "W 2 - 0"
 }, {
   "id": "051120171630",
   "date": "05/11/2017 16:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Chelsea",
   "venue": "A",
   "result": "L 0 - 1"
 }, {
   "id": "181120171730",
   "date": "18/11/2017 17:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Newcastle United",
   "venue": "H",
   "result": "W 4 - 1"
 }, {
   "id": "221120171945",
   "date": "22/11/2017 19:45",
-  "competition": "UCL",
+  "competition": "UEFA Champions League",
   "opponent": "FC Basel",
   "venue": "A",
   "result": "L 0 - 1"
 }, {
   "id": "251120171500",
   "date": "25/11/2017 15:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Brighton & Hove Albion",
   "venue": "H",
   "result": "W 1 - 0"
 }, {
   "id": "281120172000",
   "date": "28/11/2017 20:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Watford",
   "venue": "A",
   "result": "W 4 - 2"
 }, {
   "id": "021220171730",
   "date": "02/12/2017 17:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Arsenal",
   "venue": "A",
   "result": "W 3 - 1"
 }, {
   "id": "051220171945",
   "date": "05/12/2017 19:45",
-  "competition": "UCL",
+  "competition": "UEFA Champions League",
   "opponent": "CSKA Moscow",
   "venue": "H",
   "result": "W 2 - 1"
 }, {
   "id": "101220171630",
   "date": "10/12/2017 16:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Manchester City",
   "venue": "H",
   "result": "L 1 - 2"
 }, {
   "id": "131220172000",
   "date": "13/12/2017 20:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Bournemouth",
   "venue": "H",
   "result": "W 1 - 0"
 }, {
   "id": "171220171415",
   "date": "17/12/2017 14:15",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "West Brom Albion",
   "venue": "A",
   "result": "W 2 - 1"
 }, {
   "id": "201220172000",
   "date": "20/12/2017 20:00",
-  "competition": "LC",
+  "competition": "Carabao Cup",
   "opponent": "Bristol City",
   "venue": "A",
   "result": "L 1 - 2"
 }, {
   "id": "231220171945",
   "date": "23/12/2017 19:45",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Leicester City",
   "venue": "A",
   "result": "D 2 - 2"
 }, {
   "id": "261220171500",
   "date": "26/12/2017 15:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Burnley",
   "venue": "H",
   "result": "D 2 - 2"
 }, {
   "id": "301220171730",
   "date": "30/12/2017 17:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Southampton",
   "venue": "H",
   "result": "D 0 - 0"
 }, {
   "id": "010120181730",
   "date": "01/01/2018 17:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Everton",
   "venue": "A",
   "result": "W 2 - 0"
 }, {
   "id": "050120182000",
   "date": "05/01/2018 20:00",
-  "competition": "FAC",
+  "competition": "FA Cup",
   "opponent": "Derby County",
   "venue": "H",
   "result": "W 2 - 0"
 }, {
   "id": "150120182000",
   "date": "15/01/2018 20:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Stoke City",
   "venue": "H",
   "result": "W 3 - 0"
 }, {
   "id": "200120181500",
   "date": "20/01/2018 15:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Burnley",
   "venue": "A",
   "result": "W 1 - 0"
 }, {
   "id": "260120181955",
   "date": "26/01/2018 19:55",
-  "competition": "FAC",
+  "competition": "FA Cup",
   "opponent": "Yeovil Town",
   "venue": "A",
   "result": "W 4 - 0"
 }, {
   "id": "310120182000",
   "date": "31/01/2018 20:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Tottenham Hotspur",
   "venue": "A",
   "result": "L 0 - 2"
 }, {
   "id": "030220181500",
   "date": "03/02/2018 15:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Huddersfield Town",
   "venue": "H",
   "result": "W 2 - 0"
 }, {
   "id": "110220181415",
   "date": "11/02/2018 14:15",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Newcastle United",
   "venue": "A",
   "result": "L 0 - 1"
 }, {
   "id": "170220181730",
   "date": "17/02/2018 17:30",
-  "competition": "FAC",
+  "competition": "FA Cup",
   "opponent": "Huddersfield Town",
   "venue": "A",
   "result": "W 2 - 0"
 }, {
   "id": "210220181945",
   "date": "21/02/2018 19:45",
-  "competition": "UCL",
+  "competition": "UEFA Champions League",
   "opponent": "Sevilla",
   "venue": "A",
   "result": "D 0 - 0"
 }, {
   "id": "250220181405",
   "date": "25/02/2018 14:05",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Chelsea",
   "venue": "H",
   "result": "W 2 - 1"
 }, {
   "id": "050320182000",
   "date": "05/03/2018 20:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Crystal Palace",
   "venue": "A",
   "result": "W 3 - 2"
 }, {
   "id": "100320181230",
   "date": "10/03/2018 12:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Liverpool",
   "venue": "H",
   "result": "W 2 - 1"
 }, {
   "id": "130320181945",
   "date": "13/03/2018 19:45",
-  "competition": "UCL",
+  "competition": "UEFA Champions League",
   "opponent": "Sevilla",
   "venue": "H",
   "result": "L 1 - 2"
 }, {
   "id": "170320181945",
   "date": "17/03/2018 19:45",
-  "competition": "FAC",
+  "competition": "FA Cup",
   "opponent": "Brighton & Hove Albion",
   "venue": "H",
   "result": "W 2 - 0"
 }, {
   "id": "310320181500",
   "date": "31/03/2018 15:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Swansea City",
   "venue": "H",
   "result": "W 2 - 0"
 }, {
   "id": "070420181730",
   "date": "07/04/2018 17:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Manchester City",
   "venue": "A",
   "result": "W 3 - 2"
 }, {
   "id": "150420181600",
   "date": "15/04/2018 16:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "West Brom Albion",
   "venue": "H",
   "result": "L 0 - 1"
 }, {
   "id": "180420181945",
   "date": "18/04/2018 19:45",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Bournemouth",
   "venue": "A",
   "result": "W 2 - 0"
 }, {
   "id": "210420181715",
   "date": "21/04/2018 17:15",
-  "competition": "FAC",
+  "competition": "FA Cup",
   "opponent": "Tottenham Hotspur",
   "venue": "N",
   "result": "W 2 - 1"
 }, {
   "id": "290420181630",
   "date": "29/04/2018 16:30",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Arsenal",
   "venue": "H",
   "result": "W 2 - 1"
 }, {
   "id": "040520182000",
   "date": "04/05/2018 20:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Brighton & Hove Albion",
   "venue": "A",
   "result": "L 0 - 1"
 }, {
   "id": "100520181945",
   "date": "10/05/2018 19:45",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "West Ham United",
   "venue": "A"
 }, {
   "id": "130520181500",
   "date": "13/05/2018 15:00",
-  "competition": "EPL",
+  "competition": "Premier League",
   "opponent": "Watford",
   "venue": "H"
 }, {
   "id": "190520181715",
   "date": "19/05/2018 17:15",
-  "competition": "FAC",
+  "competition": "FA Cup",
   "opponent": "Chelsea",
   "venue": "N"
 }]
