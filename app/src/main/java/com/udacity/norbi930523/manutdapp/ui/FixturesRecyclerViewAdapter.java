@@ -47,11 +47,16 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
         String opponent = cursor.getString(cursor.getColumnIndex(FixtureColumns.OPPONENT));
         String venue = cursor.getString(cursor.getColumnIndex(FixtureColumns.VENUE));
         String competition = cursor.getString(cursor.getColumnIndex(FixtureColumns.COMPETITION));
+        String result = cursor.getString(cursor.getColumnIndex(FixtureColumns.RESULT));
 
         holder.fixtureDate.setText(DateUtils.formatDate(fixtureDateMillis));
-        holder.fixtureOpponent.setText(opponent);
-        holder.fixtureVenue.setText(venue);
-        holder.fixtureCompetition.setText(competition);
+        holder.fixtureOpponent.setText(String.format("v %s (%s)", opponent, venue));
+
+        if(result == null){
+            holder.fixtureCompetition.setText(competition);
+        } else {
+            holder.fixtureCompetition.setText(String.format("%s, %s", result, competition));
+        }
     }
 
     @Override
@@ -82,9 +87,6 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
         @BindView(R.id.fixtureOpponent)
         TextView fixtureOpponent;
-
-        @BindView(R.id.fixtureVenue)
-        TextView fixtureVenue;
 
         @BindView(R.id.fixtureCompetition)
         TextView fixtureCompetition;

@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/spacing_medium"
+    android:paddingRight="@dimen/spacing_medium"
+    android:layout_marginBottom="@dimen/spacing_large">
 
     <TextView
         android:id="@+id/fixtureDate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="19/15/2018 17:15" />
+
+    <ImageView
+        android:id="@+id/fixtureOpponentLogo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder"
+        app:layout_constraintStart_toStartOf="@+id/fixtureDate"
+        app:layout_constraintTop_toBottomOf="@+id/fixtureDate" />
 
     <TextView
         android:id="@+id/fixtureOpponent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/fixtureVenue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/fixtureDate"
+        app:layout_constraintStart_toEndOf="@+id/fixtureOpponentLogo"
+        app:layout_constraintTop_toTopOf="@+id/fixtureOpponentLogo"
+        tools:text="Chelsea" />
 
     <TextView
         android:id="@+id/fixtureCompetition"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/fixtureOpponent"
+        app:layout_constraintStart_toStartOf="@+id/fixtureOpponent"
+        app:layout_constraintTop_toBottomOf="@+id/fixtureOpponent"
+        tools:text="FA Cup Final"/>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
