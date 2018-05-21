@@ -32,6 +32,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    /* https://stackoverflow.com/questions/16577782/sub-folders-in-drawable-resource-folder */
+    sourceSets {
+        main {
+            res {
+                srcDir "src/main/res-team-logos"
+            }
+        }
+    }
 }
 
 dependencies {

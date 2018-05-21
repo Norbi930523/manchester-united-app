@@ -1,6 +1,7 @@
 package com.udacity.norbi930523.manutdapp.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,11 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.database.fixtures.FixtureColumns;
 import com.udacity.norbi930523.manutdapp.util.DateUtils;
+import com.udacity.norbi930523.manutdapp.util.TeamLogoUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,6 +80,12 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
         } else {
             holder.fixtureCompetition.setText(String.format("%s, %s", result, competition));
         }
+
+        Picasso.with(context)
+                .load(TeamLogoUtils.getTeamLogoResourceId(opponent))
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .into(holder.fixtureOpponentLogo);
     }
 
     @Override
@@ -110,6 +120,9 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
         @Nullable
         @BindView(R.id.fixtureMonth)
         TextView fixtureMonth;
+
+        @BindView(R.id.fixtureOpponentLogo)
+        ImageView fixtureOpponentLogo;
 
         @BindView(R.id.fixtureDate)
         TextView fixtureDate;
