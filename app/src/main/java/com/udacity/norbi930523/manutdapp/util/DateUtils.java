@@ -4,18 +4,31 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import timber.log.Timber;
 
 public class DateUtils {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private static final SimpleDateFormat DATE_PARSER;
+    private static final SimpleDateFormat DATE_FORMATTER;
+
+    static {
+        String pattern = "dd/MM/yyyy HH:mm";
+
+        DATE_FORMATTER = new SimpleDateFormat(pattern);
+
+        DATE_PARSER = new SimpleDateFormat(pattern);
+        DATE_PARSER.setTimeZone(TimeZone.getTimeZone("Europe/London"));
+    }
 
     private DateUtils(){}
 
     public static long parseDate(String dateStr){
         try {
-            return DATE_FORMAT.parse(dateStr).getTime();
+            /* Parses the date in British time zone,
+            *  returns (and stores) the date in the user's local time zone */
+            return DATE_PARSER.parse(dateStr).getTime();
         } catch (ParseException e) {
             Timber.e(e);
             return 0L;
@@ -23,7 +36,7 @@ public class DateUtils {
     }
 
     public static String formatDate(long millis){
-        return DATE_FORMAT.format(new Date(millis));
+        return DATE_FORMATTER.format(new Date(millis));
     }
 
     public static Integer getMonth(long millis){
