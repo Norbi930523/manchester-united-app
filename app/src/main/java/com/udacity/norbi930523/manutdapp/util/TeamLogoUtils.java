@@ -64,6 +64,12 @@ public class TeamLogoUtils {
                 return R.drawable.sevilla;
             case "Yeovil Town":
                 return R.drawable.yeovil_town;
+            case "Club America":
+                return R.drawable.club_america;
+            case "San Jose Earthquakes":
+                return R.drawable.san_jose_earthquakes;
+            case "AC Milan":
+                return R.drawable.ac_milan;
             default:
                 return R.drawable.placeholder;
         }

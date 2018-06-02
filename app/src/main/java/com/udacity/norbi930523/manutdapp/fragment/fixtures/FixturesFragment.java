@@ -174,8 +174,8 @@ public class FixturesFragment extends Fragment {
             /* Every fixture is in the past, show the last fixture month */
             return DateUtils.getStartOfMonth(previousFixtureMillis);
         } else {
-            /* Between two fixtures, show the current month */
-            return DateUtils.getStartOfMonth(now);
+            /* Between two fixtures, show the next fixture month */
+            return DateUtils.getStartOfMonth(nextFixtureMillis);
         }
 
     }

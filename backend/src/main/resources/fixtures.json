@@ -387,4 +387,28 @@
   "competition": "FA Cup",
   "opponent": "Chelsea",
   "venue": "N"
+}, {
+  "id": "200720180300",
+  "date": "20/07/2018 03:00",
+  "competition": "Tour 2018",
+  "opponent": "Club America",
+  "venue": "N"
+}, {
+  "id": "220720182200",
+  "date": "22/07/2018 22:00",
+  "competition": "Tour 2018",
+  "opponent": "San Jose Earthquakes",
+  "venue": "N"
+}, {
+  "id": "260720180400",
+  "date": "26/07/2018 04:00",
+  "competition": "Tour 2018",
+  "opponent": "AC Milan",
+  "venue": "N"
+}, {
+  "id": "280720182200",
+  "date": "28/07/2018 22:00",
+  "competition": "Tour 2018",
+  "opponent": "Liverpool",
+  "venue": "N"
 }]
