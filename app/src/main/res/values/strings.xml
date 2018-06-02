@@ -36,6 +36,10 @@
     <string name="fixtures_sync_start">Syncing fixtures...</string>
     <string name="fixtures_sync_end">Syncing fixtures completed!</string>
 
+    <!-- Widget -->
+    <string name="widget_title">Next match</string>
+    <string name="widget_na">N/A</string>
+
     <!-- Bottom Navigation View -->
     <string name="title_news">News</string>
     <string name="title_players">Players</string>

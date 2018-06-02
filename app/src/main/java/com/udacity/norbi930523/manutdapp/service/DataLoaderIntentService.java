@@ -301,6 +301,9 @@ public class DataLoaderIntentService extends IntentService {
         deleteMissingFixtures(now.getTime());
 
         broadcastStateChange(false);
+
+        /* Update the widget when fixtures change */
+        NextMatchWidgetUpdateService.startActionUpdateNextMatch(this);
     }
 
     private List<FixtureVO> loadFixturesFromServer(){
