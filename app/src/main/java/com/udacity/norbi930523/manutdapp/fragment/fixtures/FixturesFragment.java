@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -53,6 +54,9 @@ public class FixturesFragment extends Fragment {
     @BindView(R.id.loadingIndicator)
     ProgressBar loadingIndicator;
 
+    @BindView(R.id.syncButton)
+    FloatingActionButton syncButton;
+
     private List<Long> fixtureMonths;
 
     public FixturesFragment() {
@@ -73,10 +77,35 @@ public class FixturesFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        IntentFilter loadingIntentFilter = new IntentFilter();
+        loadingIntentFilter.addAction(DataLoaderIntentService.BROADCAST_ACTION_STATE_CHANGE);
+        loadingIntentFilter.addAction(CalendarSyncIntentService.BROADCAST_ACTION_STATE_CHANGE);
+
+        getContext().registerReceiver(loadingStateChangeReceiver, loadingIntentFilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        getContext().unregisterReceiver(loadingStateChangeReceiver);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_fixtures, container, false);
 
         ButterKnife.bind(this, root);
+
+        syncButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                syncFixturesToCalendar();
+            }
+        });
 
         loadFixtures(savedInstanceState == null);
 
@@ -86,8 +115,6 @@ public class FixturesFragment extends Fragment {
     private void loadFixtures(boolean initLoader){
         if(initLoader){
             if(NetworkUtils.isOnline(getContext())){
-                getContext().registerReceiver(loadingStateChangeReceiver, new IntentFilter(DataLoaderIntentService.BROADCAST_ACTION_STATE_CHANGE));
-
                 DataLoaderIntentService.startActionLoadFixtures(getContext());
             } else {
                 Snackbar.make(fixturesContainer, R.string.is_offline, Snackbar.LENGTH_LONG).show();
@@ -196,11 +223,15 @@ public class FixturesFragment extends Fragment {
                 toggleLoadingIndicator(isLoading);
 
                 if(!isLoading){
-                    /* Unregister the receiver when finished loading data */
-                    getContext().unregisterReceiver(this);
-
+                    /* Populate fixture pages when finished loading */
                     populateFixturePages();
                 }
+            } else if (CalendarSyncIntentService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())){
+                boolean isSyncing = intent.getBooleanExtra(CalendarSyncIntentService.BROADCAST_EXTRA_IS_SYNCING, false);
+
+                int message = isSyncing ? R.string.fixtures_sync_start : R.string.fixtures_sync_end;
+
+                Snackbar.make(fixturesContainer, message, Snackbar.LENGTH_LONG).show();
             }
         }
 

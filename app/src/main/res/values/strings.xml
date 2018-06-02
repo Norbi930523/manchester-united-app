@@ -32,6 +32,10 @@
     <string name="player_info_appearances"><![CDATA[<b>Appearances:</b> %1$d]]></string>
     <string name="player_info_goals"><![CDATA[<b>Goals:</b> %1$d]]></string>
 
+    <!-- Fixtures sync message -->
+    <string name="fixtures_sync_start">Syncing fixtures...</string>
+    <string name="fixtures_sync_end">Syncing fixtures completed!</string>
+
     <!-- Bottom Navigation View -->
     <string name="title_news">News</string>
     <string name="title_players">Players</string>

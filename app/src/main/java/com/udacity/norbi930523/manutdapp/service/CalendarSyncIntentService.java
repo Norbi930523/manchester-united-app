@@ -22,6 +22,9 @@ import timber.log.Timber;
 
 public class CalendarSyncIntentService extends IntentService {
 
+    public static final String BROADCAST_ACTION_STATE_CHANGE = "CalendarSyncIntentService.STATE_CHANGE";
+    public static final String BROADCAST_EXTRA_IS_SYNCING = "CalendarSyncIntentService.IS_SYNCING";
+
     private static final long CALENDAR_ID = 1; // Phone calendar ID
 
     private static final String ACTION_SYNC_FIXTURES = "com.udacity.norbi930523.manutdapp.service.action.SYNC_FIXTURES";
@@ -62,6 +65,8 @@ public class CalendarSyncIntentService extends IntentService {
         int writePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR);
 
         if(writePermission == PackageManager.PERMISSION_GRANTED){
+            broadcastStateChange(true);
+
             ContentResolver contentResolver = getContentResolver();
 
             ContentValues[] fixtureEvents = getFixtureEvents(contentResolver);
@@ -76,6 +81,7 @@ public class CalendarSyncIntentService extends IntentService {
                 contentResolver.insert(CalendarContract.Reminders.CONTENT_URI, reminder);
             }
 
+            broadcastStateChange(false);
         } else {
             Timber.d("Permission denied: WRITE_CALENDAR");
         }
@@ -124,6 +130,13 @@ public class CalendarSyncIntentService extends IntentService {
         }
 
         return valuesArray;
+    }
+
+    private void broadcastStateChange(boolean isSyncing){
+        Intent stateChange = new Intent(BROADCAST_ACTION_STATE_CHANGE);
+        stateChange.putExtra(BROADCAST_EXTRA_IS_SYNCING, isSyncing);
+
+        sendBroadcast(stateChange);
     }
 
 }
