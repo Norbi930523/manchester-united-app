@@ -16,7 +16,9 @@
         android:background="@color/colorPrimary"
         android:text="@string/widget_title"
         android:textColor="#ffffff"
-        android:textSize="@dimen/font_medium"/>
+        android:textSize="@dimen/font_medium"
+        android:drawableStart="@drawable/ic_widget"
+        android:drawablePadding="4dp"/>
 
     <!-- Next opponent -->
     <TextView
