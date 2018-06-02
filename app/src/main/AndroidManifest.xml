@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
         android:allowBackup="true"
@@ -21,10 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.MainActivity"
-            android:launchMode="singleTop"/>
-
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".activity.news.ArticleDetailsActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -33,7 +33,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.MainActivity" />
         </activity>
-
         <activity
             android:name=".activity.players.PlayerDetailsActivity"
             android:parentActivityName=".activity.MainActivity"
@@ -44,23 +43,25 @@
         </activity>
 
         <service
-            android:name=".network.DataLoaderIntentService"
+            android:name=".service.DataLoaderIntentService"
             android:exported="false" />
 
         <provider
             android:name=".database.generated.NewsProvider"
             android:authorities="com.udacity.norbi930523.manutdapp.news"
             android:exported="false" />
-
         <provider
             android:name=".database.generated.PlayersProvider"
             android:authorities="com.udacity.norbi930523.manutdapp.players"
             android:exported="false" />
-
         <provider
             android:name=".database.generated.FixturesProvider"
             android:authorities="com.udacity.norbi930523.manutdapp.fixtures"
             android:exported="false" />
+
+        <service
+            android:name=".service.CalendarSyncIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

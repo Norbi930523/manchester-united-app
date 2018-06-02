@@ -23,10 +23,8 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.udacity.norbi930523.manutdapp.R;
-import com.udacity.norbi930523.manutdapp.loader.NewsLoader;
 import com.udacity.norbi930523.manutdapp.loader.PlayersLoader;
-import com.udacity.norbi930523.manutdapp.network.DataLoaderIntentService;
-import com.udacity.norbi930523.manutdapp.ui.NewsRecyclerViewAdapter;
+import com.udacity.norbi930523.manutdapp.service.DataLoaderIntentService;
 import com.udacity.norbi930523.manutdapp.ui.PlayersRecyclerViewAdapter;
 import com.udacity.norbi930523.manutdapp.util.NetworkUtils;
 

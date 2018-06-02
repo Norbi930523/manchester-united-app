@@ -1,5 +1,6 @@
 package com.udacity.norbi930523.manutdapp.activity;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,6 +13,7 @@ import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.fragment.fixtures.FixturesFragment;
 import com.udacity.norbi930523.manutdapp.fragment.news.NewsFragment;
 import com.udacity.norbi930523.manutdapp.fragment.players.PlayersFragment;
+import com.udacity.norbi930523.manutdapp.service.CalendarSyncIntentService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +74,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         throw new IllegalArgumentException("Unhandled menu item!");
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case FixturesFragment.PERMISSION_REQUEST_WRITE_CALENDAR: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    CalendarSyncIntentService.startActionSyncFixtures(this);
+                }
+            }
+
+        }
     }
 
 }

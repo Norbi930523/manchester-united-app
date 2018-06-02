@@ -10,6 +10,8 @@ import timber.log.Timber;
 
 public class DateUtils {
 
+    public static final long MILLIS_IN_HOUR = 1000 * 60 * 60;
+
     private static final SimpleDateFormat DATE_PARSER;
     private static final SimpleDateFormat DATE_FORMATTER;
 

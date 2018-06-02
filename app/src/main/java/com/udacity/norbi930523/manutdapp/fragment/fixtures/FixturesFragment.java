@@ -1,20 +1,22 @@
 package com.udacity.norbi930523.manutdapp.fragment.fixtures;
 
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,19 +27,22 @@ import android.widget.ProgressBar;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.database.fixtures.FixtureColumns;
 import com.udacity.norbi930523.manutdapp.database.fixtures.FixturesProvider;
-import com.udacity.norbi930523.manutdapp.network.DataLoaderIntentService;
+import com.udacity.norbi930523.manutdapp.service.CalendarSyncIntentService;
+import com.udacity.norbi930523.manutdapp.service.DataLoaderIntentService;
 import com.udacity.norbi930523.manutdapp.util.DateUtils;
 import com.udacity.norbi930523.manutdapp.util.NetworkUtils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static butterknife.internal.Utils.arrayOf;
+
 public class FixturesFragment extends Fragment {
+
+    public static final int PERMISSION_REQUEST_WRITE_CALENDAR = 0;
 
     @BindView(R.id.fixturesContainer)
     FrameLayout fixturesContainer;
@@ -90,6 +95,19 @@ public class FixturesFragment extends Fragment {
 
         }
 
+    }
+
+    public void syncFixturesToCalendar(){
+        int permission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_CALENDAR);
+
+        /* https://developer.android.com/training/permissions/requesting#java */
+        if(permission == PackageManager.PERMISSION_DENIED){
+            ActivityCompat.requestPermissions(getActivity(),
+                    arrayOf(Manifest.permission.WRITE_CALENDAR),
+                    PERMISSION_REQUEST_WRITE_CALENDAR);
+        } else {
+            CalendarSyncIntentService.startActionSyncFixtures(getContext());
+        }
     }
 
     private void populateFixturePages() {

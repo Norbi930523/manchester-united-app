@@ -1,4 +1,4 @@
-package com.udacity.norbi930523.manutdapp.network;
+package com.udacity.norbi930523.manutdapp.service;
 
 import android.app.IntentService;
 import android.content.ContentValues;
