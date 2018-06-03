@@ -27,6 +27,8 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     private ArticleListFragment.ArticleListItemClickListener articleListItemClickListener;
 
+    private int selectedStepIndex = -1;
+
     public NewsRecyclerViewAdapter(Context context, ArticleListFragment.ArticleListItemClickListener articleListItemClickListener){
         super();
         this.context = context;
@@ -48,6 +50,8 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
         cursor.moveToPosition(position);
+
+        holder.itemView.setSelected(position == selectedStepIndex);
 
         holder.articleId = cursor.getLong(cursor.getColumnIndex(ArticleColumns._ID));
         holder.articleTitle.setText(cursor.getString(cursor.getColumnIndex(ArticleColumns.TITLE)));
@@ -108,6 +112,18 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
         @Override
         public void onClick(View v) {
+            /* If the selected step changes... */
+            if(selectedStepIndex != getAdapterPosition()){
+                /* Update the previously selected step list item */
+                notifyItemChanged(selectedStepIndex);
+
+                /* Update the current step list item */
+                notifyItemChanged(getAdapterPosition());
+
+                /* Update the selected step index */
+                selectedStepIndex = getAdapterPosition();
+            }
+
             articleListItemClickListener.onArticleClick(articleId, articleImage);
         }
     }

@@ -7,6 +7,7 @@
     <!-- News -->
     <string name="article_not_found">Could not find the selected article!</string>
     <string name="article_image_transition">articleImageTransition</string>
+    <string name="select_article">Please select an article</string>
 
     <!-- Players -->
     <string name="player_name_pattern"><![CDATA[<b>#%1$d</b> %2$s]]></string>

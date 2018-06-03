@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.udacity.norbi930523.manutdapp.R;
+import com.udacity.norbi930523.manutdapp.activity.MainActivity;
+import com.udacity.norbi930523.manutdapp.activity.news.ArticleDetailsActivity;
 import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
 import com.udacity.norbi930523.manutdapp.loader.NewsLoader;
 import com.udacity.norbi930523.manutdapp.util.TextUtils;
@@ -32,7 +34,7 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
     private static final int ARTICLE_LOADER_ID = 101;
 
     private static final String ARTICLE_ID_PARAM = "articleId";
-
+    
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -110,7 +112,10 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
 
         } else {
             Toast.makeText(getContext(), R.string.article_not_found, Toast.LENGTH_LONG).show();
-            getActivity().finish();
+
+            if(getActivity() instanceof ArticleDetailsActivity){
+                getActivity().finish();
+            }
         }
     }
 
@@ -124,8 +129,12 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(activity instanceof ArticleDetailsActivity){
+            /* Change toolbar only in single pane layout */
+            activity.setSupportActionBar(toolbar);
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
     }
 
     private void loadImage(String imageUrl){
