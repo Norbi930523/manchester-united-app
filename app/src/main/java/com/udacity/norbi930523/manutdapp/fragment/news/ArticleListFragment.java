@@ -35,6 +35,8 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     private static final String LIST_STATE_KEY = "listState";
 
+    private static final String SELECTED_ITEM_INDEX_KEY = "selectedItemIndex";
+
     private static final int NEWS_LOADER_ID = 100;
 
     @BindView(R.id.articleListContainer)
@@ -83,6 +85,10 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
         ButterKnife.bind(this, root);
 
+        if(savedInstanceState != null){
+            newsAdapter.setSelectedItemIndex(savedInstanceState.getInt(SELECTED_ITEM_INDEX_KEY));
+        }
+
         newsRecyclerView.setAdapter(newsAdapter);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -94,6 +100,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(LIST_STATE_KEY, newsRecyclerView.getLayoutManager().onSaveInstanceState());
+        outState.putInt(SELECTED_ITEM_INDEX_KEY, newsAdapter.getSelectedItemIndex());
     }
 
     private void loadNews(boolean initLoader){

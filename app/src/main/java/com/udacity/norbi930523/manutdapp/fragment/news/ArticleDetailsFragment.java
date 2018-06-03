@@ -79,11 +79,7 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
 
         ButterKnife.bind(this, root);
 
-        if(savedInstanceState == null){
-            getActivity().getSupportLoaderManager().initLoader(ARTICLE_LOADER_ID, null, this);
-        } else {
-            getActivity().getSupportLoaderManager().restartLoader(ARTICLE_LOADER_ID, null, this);
-        }
+        getActivity().getSupportLoaderManager().initLoader(ARTICLE_LOADER_ID, null, this);
 
         return root;
     }
@@ -117,6 +113,8 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
                 getActivity().finish();
             }
         }
+
+        getActivity().getSupportLoaderManager().destroyLoader(ARTICLE_LOADER_ID);
     }
 
     @Override

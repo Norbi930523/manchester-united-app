@@ -27,7 +27,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     private ArticleListFragment.ArticleListItemClickListener articleListItemClickListener;
 
-    private int selectedStepIndex = -1;
+    private int selectedItemIndex = -1;
 
     public NewsRecyclerViewAdapter(Context context, ArticleListFragment.ArticleListItemClickListener articleListItemClickListener){
         super();
@@ -51,7 +51,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
         cursor.moveToPosition(position);
 
-        holder.itemView.setSelected(position == selectedStepIndex);
+        holder.itemView.setSelected(position == selectedItemIndex);
 
         holder.articleId = cursor.getLong(cursor.getColumnIndex(ArticleColumns._ID));
         holder.articleTitle.setText(cursor.getString(cursor.getColumnIndex(ArticleColumns.TITLE)));
@@ -89,6 +89,14 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         notifyDataSetChanged();
     }
 
+    public int getSelectedItemIndex() {
+        return selectedItemIndex;
+    }
+
+    public void setSelectedItemIndex(int selectedItemIndex) {
+        this.selectedItemIndex = selectedItemIndex;
+    }
+
     class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         Long articleId;
@@ -112,16 +120,16 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
         @Override
         public void onClick(View v) {
-            /* If the selected step changes... */
-            if(selectedStepIndex != getAdapterPosition()){
-                /* Update the previously selected step list item */
-                notifyItemChanged(selectedStepIndex);
+            /* If the selected item changes... */
+            if(selectedItemIndex != getAdapterPosition()){
+                /* Update the previously selected list item */
+                notifyItemChanged(selectedItemIndex);
 
-                /* Update the current step list item */
+                /* Update the current list item */
                 notifyItemChanged(getAdapterPosition());
 
-                /* Update the selected step index */
-                selectedStepIndex = getAdapterPosition();
+                /* Update the selected item index */
+                selectedItemIndex = getAdapterPosition();
             }
 
             articleListItemClickListener.onArticleClick(articleId, articleImage);

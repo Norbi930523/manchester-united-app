@@ -3,6 +3,7 @@ package com.udacity.norbi930523.manutdapp.fragment.news;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NewsFragment extends Fragment implements ArticleListFragment.ArticleListItemClickListener {
+
+    private static final String SELECT_ARTICLE_TEXT_VISIBILITY_KEY = "selectArticleTextVisibility";
 
     @Nullable
     @BindView(R.id.selectArticleText)
@@ -48,9 +51,26 @@ public class NewsFragment extends Fragment implements ArticleListFragment.Articl
 
         ButterKnife.bind(this, root);
 
-        isTwoPaneLayout = selectArticleText != null;
+        if(selectArticleText != null){
+            isTwoPaneLayout = true;
+
+            if(savedInstanceState != null){
+                selectArticleText.setVisibility(savedInstanceState.getInt(SELECT_ARTICLE_TEXT_VISIBILITY_KEY));
+            }
+        } else {
+            isTwoPaneLayout = false;
+        }
 
         return root;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if(selectArticleText != null){
+            outState.putInt(SELECT_ARTICLE_TEXT_VISIBILITY_KEY, selectArticleText.getVisibility());
+        }
     }
 
     @Override
