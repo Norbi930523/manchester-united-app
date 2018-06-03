@@ -15,6 +15,10 @@
         <item name="android:windowContentTransitions">true</item>
     </style>
 
+    <style name="CollapsingToolbar" >
+        <item name="contentScrim">@color/colorPrimary</item>
+    </style>
+
     <style name="ListItem">
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">@dimen/font_medium</item>

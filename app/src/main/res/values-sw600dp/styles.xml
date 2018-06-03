@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CollapsingToolbar" >
+        <item name="contentScrim">@android:color/white</item>
+        <item name="collapsedTitleTextAppearance">@style/CollapsingToolbar.CollapsedTitle</item>
+    </style>
+
+    <style name="CollapsingToolbar.CollapsedTitle">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+</resources>

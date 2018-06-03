@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_xlarge"
-            android:text="Please select an article"
+            android:text="@string/select_article"
             android:textSize="@dimen/font_large"
             android:layout_gravity="center"/>
 
