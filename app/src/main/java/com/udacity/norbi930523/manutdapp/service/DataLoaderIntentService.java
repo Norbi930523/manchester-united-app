@@ -133,7 +133,7 @@ public class DataLoaderIntentService extends IntentService {
             ContentValues cv = new ContentValues();
             cv.put(ArticleColumns._ID, article.getId());
             cv.put(ArticleColumns.TITLE, article.getTitle());
-            cv.put(ArticleColumns.SUBTITLE, article.getSubtitle());
+            cv.put(ArticleColumns.AUTHOR, article.getAuthor());
             cv.put(ArticleColumns.DATE, DateUtils.parseDate(article.getDate()));
             cv.put(ArticleColumns.SUMMARY, article.getSummary());
             cv.put(ArticleColumns.CONTENT, article.getContent());

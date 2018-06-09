@@ -8,7 +8,7 @@ public class ArticleVO {
 
     private String title;
 
-    private String subtitle;
+    private String author;
 
     private String date;
 
@@ -40,12 +40,12 @@ public class ArticleVO {
         this.title = title;
     }
 
-    public String getSubtitle() {
-        return subtitle;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getDate() {

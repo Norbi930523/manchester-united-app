@@ -14,7 +14,7 @@ public class NewsLoader extends CursorLoader {
     private static final String[] PROJECTION_DETAIL = {
             ArticleColumns._ID,
             ArticleColumns.TITLE,
-            ArticleColumns.SUBTITLE,
+            ArticleColumns.AUTHOR,
             ArticleColumns.DATE,
             ArticleColumns.SUMMARY,
             ArticleColumns.CONTENT,

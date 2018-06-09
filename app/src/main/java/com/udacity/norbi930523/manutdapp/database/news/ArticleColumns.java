@@ -16,7 +16,7 @@ public interface ArticleColumns {
 
     @NotNull
     @DataType(DataType.Type.TEXT)
-    String SUBTITLE = "subtitle";
+    String AUTHOR = "author";
 
     @NotNull
     @DataType(DataType.Type.TEXT)
