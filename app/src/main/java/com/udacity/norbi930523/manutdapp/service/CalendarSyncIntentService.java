@@ -69,6 +69,14 @@ public class CalendarSyncIntentService extends IntentService {
 
             ContentResolver contentResolver = getContentResolver();
 
+            /* Delete previously inserted events */
+            contentResolver.delete(
+                    CalendarContract.Events.CONTENT_URI,
+                    CalendarContract.Events.CALENDAR_ID + " = ? AND " + CalendarContract.Events.CUSTOM_APP_PACKAGE + " = ?",
+                    new String[]{ String.valueOf(CALENDAR_ID), getApplication().getPackageName() }
+             );
+
+            /* Insert events */
             ContentValues[] fixtureEvents = getFixtureEvents(contentResolver);
 
             for(ContentValues fixtureEvent : fixtureEvents){
@@ -123,6 +131,7 @@ public class CalendarSyncIntentService extends IntentService {
             values.put(CalendarContract.Events.DTEND, date + FIXTURE_DURATION_MILLIS);
             values.put(CalendarContract.Events.CALENDAR_ID, CALENDAR_ID);
             values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+            values.put(CalendarContract.Events.CUSTOM_APP_PACKAGE, getApplicationContext().getPackageName());
 
             valuesArray[valuesIndex] = values;
 
