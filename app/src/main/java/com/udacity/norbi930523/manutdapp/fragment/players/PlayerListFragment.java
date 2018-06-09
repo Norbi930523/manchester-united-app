@@ -105,17 +105,20 @@ public class PlayerListFragment extends Fragment implements LoaderManager.Loader
 
     private void loadPlayers(boolean initLoader){
         if(initLoader){
-            getActivity().getSupportLoaderManager().initLoader(PLAYERS_LOADER_ID, null, this);
-
+            /* On the first run, load players from the server if online,
+             * otherwise load from database */
             if(NetworkUtils.isOnline(getContext())){
                 getContext().registerReceiver(loadingStateChangeReceiver, new IntentFilter(DataLoaderIntentService.BROADCAST_ACTION_STATE_CHANGE));
 
                 DataLoaderIntentService.startActionLoadPlayers(getContext());
             } else {
+                getActivity().getSupportLoaderManager().initLoader(PLAYERS_LOADER_ID, null, this);
+
                 Snackbar.make(playerListContainer, R.string.is_offline, Snackbar.LENGTH_LONG).show();
             }
 
         } else {
+            /* This is not the first run, load players from database */
             getActivity().getSupportLoaderManager().restartLoader(PLAYERS_LOADER_ID, null, this);
         }
 
@@ -130,7 +133,12 @@ public class PlayerListFragment extends Fragment implements LoaderManager.Loader
                 toggleLoadingIndicator(isLoading);
 
                 if(!isLoading){
-                    /* Unregister the receiver when finished loading data */
+                    /* Finished loading data from server, init cursor loader */
+                    getActivity().getSupportLoaderManager()
+                            .initLoader(PLAYERS_LOADER_ID, null, PlayerListFragment.this);
+
+                    /* Unregister the receiver when finished loading data,
+                     * as we won't need it anymore while the user is on this screen */
                     getContext().unregisterReceiver(this);
                 }
             }
