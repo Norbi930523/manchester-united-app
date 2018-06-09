@@ -115,12 +115,22 @@ public class FixturesFragment extends Fragment {
 
     private void loadFixtures(boolean initLoader){
         if(initLoader){
+            /* On the first run, load fixtures from the server if online,
+             * otherwise load from database */
             if(NetworkUtils.isOnline(getContext())){
                 DataLoaderIntentService.startActionLoadFixtures(getContext());
             } else {
+                populateFixturePages();
+
                 Snackbar.make(fixturesContainer, R.string.is_offline, Snackbar.LENGTH_LONG).show();
             }
 
+        } else {
+            /* This is not the first run, load fixtures from database
+             * if there is no data loading going on */
+            if(loadingIndicator.getVisibility() != View.VISIBLE){
+                populateFixturePages();
+            }
         }
 
     }
