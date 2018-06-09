@@ -23,7 +23,13 @@ import timber.log.Timber;
 public class CalendarSyncIntentService extends IntentService {
 
     public static final String BROADCAST_ACTION_STATE_CHANGE = "CalendarSyncIntentService.STATE_CHANGE";
-    public static final String BROADCAST_EXTRA_IS_SYNCING = "CalendarSyncIntentService.IS_SYNCING";
+    public static final String BROADCAST_EXTRA_SYNC_STATUS = "CalendarSyncIntentService.SYNC_STATUS";
+
+    public static class SyncStatus{
+        public static final int IN_PROGRESS = 0;
+        public static final int SUCCESS = 1;
+        public static final int FAILURE = 2;
+    }
 
     private static final long CALENDAR_ID = 1; // Phone calendar ID
 
@@ -65,7 +71,7 @@ public class CalendarSyncIntentService extends IntentService {
         int writePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR);
 
         if(writePermission == PackageManager.PERMISSION_GRANTED){
-            broadcastStateChange(true);
+            broadcastStateChange(SyncStatus.IN_PROGRESS);
 
             ContentResolver contentResolver = getContentResolver();
 
@@ -79,17 +85,21 @@ public class CalendarSyncIntentService extends IntentService {
             /* Insert events */
             ContentValues[] fixtureEvents = getFixtureEvents(contentResolver);
 
-            for(ContentValues fixtureEvent : fixtureEvents){
-                Uri eventUri = contentResolver.insert(CalendarContract.Events.CONTENT_URI, fixtureEvent);
+            try{
+                for(ContentValues fixtureEvent : fixtureEvents){
+                    Uri eventUri = contentResolver.insert(CalendarContract.Events.CONTENT_URI, fixtureEvent);
 
-                Long eventId = Long.parseLong(eventUri.getLastPathSegment());
+                    Long eventId = Long.parseLong(eventUri.getLastPathSegment());
 
-                /* Set reminder */
-                ContentValues reminder = getReminderForEvent(eventId);
-                contentResolver.insert(CalendarContract.Reminders.CONTENT_URI, reminder);
+                    /* Set reminder */
+                    ContentValues reminder = getReminderForEvent(eventId);
+                    contentResolver.insert(CalendarContract.Reminders.CONTENT_URI, reminder);
+                }
+
+                broadcastStateChange(SyncStatus.SUCCESS);
+            } catch (Exception e){
+                broadcastStateChange(SyncStatus.FAILURE);
             }
-
-            broadcastStateChange(false);
         } else {
             Timber.d("Permission denied: WRITE_CALENDAR");
         }
@@ -141,9 +151,9 @@ public class CalendarSyncIntentService extends IntentService {
         return valuesArray;
     }
 
-    private void broadcastStateChange(boolean isSyncing){
+    private void broadcastStateChange(int syncStatus){
         Intent stateChange = new Intent(BROADCAST_ACTION_STATE_CHANGE);
-        stateChange.putExtra(BROADCAST_EXTRA_IS_SYNCING, isSyncing);
+        stateChange.putExtra(BROADCAST_EXTRA_SYNC_STATUS, syncStatus);
 
         sendBroadcast(stateChange);
     }

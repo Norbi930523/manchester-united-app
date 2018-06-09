@@ -238,11 +238,25 @@ public class FixturesFragment extends Fragment {
                     populateFixturePages();
                 }
             } else if (CalendarSyncIntentService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())){
-                boolean isSyncing = intent.getBooleanExtra(CalendarSyncIntentService.BROADCAST_EXTRA_IS_SYNCING, false);
+                int syncStatus = intent.getIntExtra(CalendarSyncIntentService.BROADCAST_EXTRA_SYNC_STATUS, 0);
 
-                int message = isSyncing ? R.string.fixtures_sync_start : R.string.fixtures_sync_end;
+                int message = getMessageBySyncStatus(syncStatus);
 
                 Snackbar.make(fixturesContainer, message, Snackbar.LENGTH_LONG).show();
+
+            }
+        }
+
+        private int getMessageBySyncStatus(int syncStatus) {
+            switch (syncStatus){
+                case CalendarSyncIntentService.SyncStatus.IN_PROGRESS:
+                    return R.string.fixtures_sync_start;
+                case CalendarSyncIntentService.SyncStatus.SUCCESS:
+                    return R.string.fixtures_sync_success;
+                case CalendarSyncIntentService.SyncStatus.FAILURE:
+                    return R.string.fixtures_sync_failed;
+                default:
+                    return 0;
             }
         }
 
