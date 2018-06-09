@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -253,6 +254,15 @@ public class FixturesFragment extends Fragment {
         @Override
         public int getCount() {
             return fixtureMonths.size();
+        }
+
+        @Override
+        public float getPageWidth(int position) {
+            /* https://stackoverflow.com/a/20120240 */
+            TypedValue pageWidth = new TypedValue();
+            getResources().getValue(R.dimen.fixtures_page_width, pageWidth, true);
+
+            return pageWidth.getFloat();
         }
     }
 
