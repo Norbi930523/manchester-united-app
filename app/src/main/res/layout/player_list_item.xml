@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:layout_marginTop="@dimen/spacing_small"
-    android:layout_marginLeft="@dimen/spacing_xlarge"
-    android:layout_marginStart="@dimen/spacing_xlarge"
-    android:layout_marginBottom="@dimen/spacing_small"
     android:background="?android:attr/selectableItemBackground">
 
-    <ImageView
-        android:id="@+id/playerImage"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:scaleType="centerCrop"/>
-
-    <TextView
-        android:id="@+id/playerName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:layout_gravity="center_vertical"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/spacing_small"
+        android:paddingBottom="@dimen/spacing_small"
         android:paddingLeft="@dimen/spacing_medium"
-        android:paddingStart="@dimen/spacing_medium"
         android:paddingRight="@dimen/spacing_medium"
-        android:paddingEnd="@dimen/spacing_medium"
-        style="@style/PlayerListItem"/>
+        android:background="@drawable/selected_article">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/playerImage"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/playerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/spacing_medium"
+            android:paddingStart="@dimen/spacing_medium"
+            android:paddingRight="@dimen/spacing_medium"
+            android:paddingEnd="@dimen/spacing_medium"
+            style="@style/PlayerListItem"/>
+
+    </LinearLayout>
+
+</FrameLayout>

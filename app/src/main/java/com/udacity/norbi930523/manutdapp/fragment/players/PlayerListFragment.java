@@ -35,6 +35,8 @@ public class PlayerListFragment extends Fragment implements LoaderManager.Loader
 
     private static final String LIST_STATE_KEY = "listState";
 
+    private static final String SELECTED_ITEM_INDEX_KEY = "selectedItemIndex";
+
     private static final int PLAYERS_LOADER_ID = 200;
 
     @BindView(R.id.playerListContainer)
@@ -83,6 +85,10 @@ public class PlayerListFragment extends Fragment implements LoaderManager.Loader
 
         ButterKnife.bind(this, root);
 
+        if(savedInstanceState != null){
+            playersAdapter.setSelectedItemIndex(savedInstanceState.getInt(SELECTED_ITEM_INDEX_KEY));
+        }
+
         playersRecyclerView.setAdapter(playersAdapter);
         playersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -94,6 +100,7 @@ public class PlayerListFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(LIST_STATE_KEY, playersRecyclerView.getLayoutManager().onSaveInstanceState());
+        outState.putInt(SELECTED_ITEM_INDEX_KEY, playersAdapter.getSelectedItemIndex());
     }
 
     private void loadPlayers(boolean initLoader){

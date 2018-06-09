@@ -24,6 +24,7 @@
 
     <string name="player_not_found">Could not find the selected player!</string>
     <string name="player_image_transition">playerImageTransition</string>
+    <string name="select_player">Please select a player</string>
 
     <string name="player_info_squad_number"><![CDATA[<b>Squad number:</b> %1$d]]></string>
     <string name="player_info_birthdate"><![CDATA[<b>Date of birth:</b> %1$s, in %2$s]]></string>

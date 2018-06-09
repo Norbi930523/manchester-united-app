@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.udacity.norbi930523.manutdapp.R;
+import com.udacity.norbi930523.manutdapp.activity.players.PlayerDetailsActivity;
 import com.udacity.norbi930523.manutdapp.database.players.PlayerColumns;
 import com.udacity.norbi930523.manutdapp.loader.PlayersLoader;
 import com.udacity.norbi930523.manutdapp.util.PlayerPositionUtils;
@@ -96,11 +97,7 @@ public class PlayerDetailsFragment extends Fragment implements LoaderManager.Loa
 
         ButterKnife.bind(this, root);
 
-        if(savedInstanceState == null){
-            getActivity().getSupportLoaderManager().initLoader(PLAYER_LOADER_ID, null, this);
-        } else {
-            getActivity().getSupportLoaderManager().restartLoader(PLAYER_LOADER_ID, null, this);
-        }
+        getActivity().getSupportLoaderManager().initLoader(PLAYER_LOADER_ID, null, this);
 
         return root;
     }
@@ -145,8 +142,13 @@ public class PlayerDetailsFragment extends Fragment implements LoaderManager.Loa
 
         } else {
             Toast.makeText(getContext(), R.string.player_not_found, Toast.LENGTH_LONG).show();
-            getActivity().finish();
+
+            if(getActivity() instanceof PlayerDetailsActivity){
+                getActivity().finish();
+            }
         }
+
+        getActivity().getSupportLoaderManager().destroyLoader(PLAYER_LOADER_ID);
     }
 
     @Override
@@ -159,8 +161,11 @@ public class PlayerDetailsFragment extends Fragment implements LoaderManager.Loa
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
 
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(activity instanceof PlayerDetailsActivity){
+            /* Change toolbar only in single pane layout */
+            activity.setSupportActionBar(toolbar);
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void loadImage(String imageUrl){

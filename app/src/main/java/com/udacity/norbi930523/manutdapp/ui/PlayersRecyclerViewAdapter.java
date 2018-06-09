@@ -33,6 +33,8 @@ public class PlayersRecyclerViewAdapter extends RecyclerView.Adapter<PlayersRecy
 
     private Context context;
 
+    private int selectedItemIndex = -1;
+
     private PlayerListFragment.PlayerListItemClickListener playerListItemClickListener;
 
     public PlayersRecyclerViewAdapter(Context context, PlayerListFragment.PlayerListItemClickListener playerListItemClickListener){
@@ -69,6 +71,8 @@ public class PlayersRecyclerViewAdapter extends RecyclerView.Adapter<PlayersRecy
     @Override
     public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
         cursor.moveToPosition(position);
+
+        holder.itemView.setSelected(position == selectedItemIndex);
 
         holder.playerId = cursor.getLong(cursor.getColumnIndex(PlayerColumns._ID));
 
@@ -141,6 +145,14 @@ public class PlayersRecyclerViewAdapter extends RecyclerView.Adapter<PlayersRecy
         notifyDataSetChanged();
     }
 
+    public int getSelectedItemIndex() {
+        return selectedItemIndex;
+    }
+
+    public void setSelectedItemIndex(int selectedItemIndex) {
+        this.selectedItemIndex = selectedItemIndex;
+    }
+
     class PlayerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         Long playerId;
@@ -169,6 +181,18 @@ public class PlayersRecyclerViewAdapter extends RecyclerView.Adapter<PlayersRecy
 
         @Override
         public void onClick(View v) {
+            /* If the selected item changes... */
+            if(selectedItemIndex != getAdapterPosition()){
+                /* Update the previously selected list item */
+                notifyItemChanged(selectedItemIndex);
+
+                /* Update the current list item */
+                notifyItemChanged(getAdapterPosition());
+
+                /* Update the selected item index */
+                selectedItemIndex = getAdapterPosition();
+            }
+
             playerListItemClickListener.onPlayerClick(playerId, playerImage);
         }
 
