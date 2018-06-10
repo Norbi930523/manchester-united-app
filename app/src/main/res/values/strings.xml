@@ -3,6 +3,7 @@
 
     <!-- Common -->
     <string name="is_offline">You are offline</string>
+    <string name="server_unavailable">The server is currently unavailable.</string>
 
     <!-- News -->
     <string name="article_not_found">Could not find the selected article!</string>

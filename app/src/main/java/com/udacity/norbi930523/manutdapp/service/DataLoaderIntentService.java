@@ -12,6 +12,8 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.util.DateTime;
 import com.udacity.norbi930523.manutdapp.BuildConfig;
 import com.udacity.norbi930523.manutdapp.R;
@@ -38,8 +40,14 @@ import timber.log.Timber;
 
 public class DataLoaderIntentService extends IntentService {
 
-    public static final String BROADCAST_ACTION_STATE_CHANGE = "DataLoaderIntentService.STATE_CHANGE";
-    public static final String BROADCAST_EXTRA_IS_LOADING = "DataLoaderIntentService.IS_LOADING";
+    public static final String BROADCAST_ACTION_STATUS_CHANGE = "DataLoaderIntentService.STATUS_CHANGE";
+    public static final String BROADCAST_EXTRA_SYNC_STATUS = "DataLoaderIntentService.SYNC_STATUS";
+
+    public static class DataSyncStatus {
+        public static final int IN_PROGRESS = 0;
+        public static final int SUCCESS = 1;
+        public static final int SERVER_UNAVAILABLE = 2;
+    }
 
     private static final String NEWS_LAST_UPDATE_KEY = "newsLastUpdate";
 
@@ -57,7 +65,12 @@ public class DataLoaderIntentService extends IntentService {
         Manutd.Builder builder = new Manutd.Builder(
                 AndroidHttp.newCompatibleTransport(),
                 new AndroidJsonFactory(),
-                null);
+                new HttpRequestInitializer() {
+                    @Override
+                    public void initialize(HttpRequest request) throws IOException {
+                        request.setConnectTimeout(5000);
+                    }
+                });
 
         builder.setApplicationName(getString(R.string.app_name));
 
@@ -115,12 +128,12 @@ public class DataLoaderIntentService extends IntentService {
             initApiService();
         }
 
-        broadcastStateChange(true);
+        broadcastStatusChange(DataSyncStatus.IN_PROGRESS);
 
         List<ArticleVO> articles = loadArticlesFromServer();
 
         if(articles == null){
-            broadcastStateChange(false);
+            broadcastStatusChange(DataSyncStatus.SERVER_UNAVAILABLE);
             return;
         }
 
@@ -144,7 +157,7 @@ public class DataLoaderIntentService extends IntentService {
 
         getContentResolver().bulkInsert(NewsProvider.News.NEWS, values);
 
-        broadcastStateChange(false);
+        broadcastStatusChange(DataSyncStatus.SUCCESS);
     }
 
     private List<ArticleVO> loadArticlesFromServer(){
@@ -185,12 +198,12 @@ public class DataLoaderIntentService extends IntentService {
             initApiService();
         }
 
-        broadcastStateChange(true);
+        broadcastStatusChange(DataSyncStatus.IN_PROGRESS);
 
         List<PlayerVO> players = loadPlayersFromServer();
 
         if(players == null){
-            broadcastStateChange(false);
+            broadcastStatusChange(DataSyncStatus.SERVER_UNAVAILABLE);
             return;
         }
 
@@ -226,7 +239,7 @@ public class DataLoaderIntentService extends IntentService {
         /* Delete players that were not present in the json, based on their last update time */
         deleteMissingPlayers(now.getTime());
 
-        broadcastStateChange(false);
+        broadcastStatusChange(DataSyncStatus.SUCCESS);
     }
 
     private void deleteMissingPlayers(long nowInMillis) {
@@ -267,12 +280,12 @@ public class DataLoaderIntentService extends IntentService {
             initApiService();
         }
 
-        broadcastStateChange(true);
+        broadcastStatusChange(DataSyncStatus.IN_PROGRESS);
 
         List<FixtureVO> fixtures = loadFixturesFromServer();
 
         if(fixtures == null){
-            broadcastStateChange(false);
+            broadcastStatusChange(DataSyncStatus.SERVER_UNAVAILABLE);
             return;
         }
 
@@ -300,7 +313,7 @@ public class DataLoaderIntentService extends IntentService {
         /* Delete fixtures that were not present in the json, based on their last update time */
         deleteMissingFixtures(now.getTime());
 
-        broadcastStateChange(false);
+        broadcastStatusChange(DataSyncStatus.SUCCESS);
 
         /* Update the widget when fixtures change */
         NextMatchWidgetUpdateService.startActionUpdateNextMatch(this);
@@ -339,10 +352,10 @@ public class DataLoaderIntentService extends IntentService {
         );
     }
 
-    private void broadcastStateChange(boolean isLoading){
-        Intent stateChange = new Intent(BROADCAST_ACTION_STATE_CHANGE);
-        stateChange.putExtra(BROADCAST_EXTRA_IS_LOADING, isLoading);
+    private void broadcastStatusChange(int syncStatus){
+        Intent statusChange = new Intent(BROADCAST_ACTION_STATUS_CHANGE);
+        statusChange.putExtra(BROADCAST_EXTRA_SYNC_STATUS, syncStatus);
 
-        sendBroadcast(stateChange);
+        sendBroadcast(statusChange);
     }
 }

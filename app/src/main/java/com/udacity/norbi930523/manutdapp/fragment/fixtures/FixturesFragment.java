@@ -82,17 +82,17 @@ public class FixturesFragment extends Fragment {
         super.onResume();
 
         IntentFilter loadingIntentFilter = new IntentFilter();
-        loadingIntentFilter.addAction(DataLoaderIntentService.BROADCAST_ACTION_STATE_CHANGE);
-        loadingIntentFilter.addAction(CalendarSyncIntentService.BROADCAST_ACTION_STATE_CHANGE);
+        loadingIntentFilter.addAction(DataLoaderIntentService.BROADCAST_ACTION_STATUS_CHANGE);
+        loadingIntentFilter.addAction(CalendarSyncIntentService.BROADCAST_ACTION_STATUS_CHANGE);
 
-        getContext().registerReceiver(loadingStateChangeReceiver, loadingIntentFilter);
+        getContext().registerReceiver(loadingStatusChangeReceiver, loadingIntentFilter);
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        getContext().unregisterReceiver(loadingStateChangeReceiver);
+        getContext().unregisterReceiver(loadingStatusChangeReceiver);
     }
 
     @Override
@@ -225,19 +225,24 @@ public class FixturesFragment extends Fragment {
         return distinctFixtureMonths;
     }
 
-    private BroadcastReceiver loadingStateChangeReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver loadingStatusChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(DataLoaderIntentService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())){
-                boolean isLoading = intent.getBooleanExtra(DataLoaderIntentService.BROADCAST_EXTRA_IS_LOADING, false);
+            if(DataLoaderIntentService.BROADCAST_ACTION_STATUS_CHANGE.equals(intent.getAction())){
+                int syncStatus = intent.getIntExtra(DataLoaderIntentService.BROADCAST_EXTRA_SYNC_STATUS, 0);
 
-                toggleLoadingIndicator(isLoading);
+                toggleLoadingIndicator(syncStatus == DataLoaderIntentService.DataSyncStatus.IN_PROGRESS);
 
-                if(!isLoading){
+                if(syncStatus != DataLoaderIntentService.DataSyncStatus.IN_PROGRESS){
                     /* Populate fixture pages when finished loading */
                     populateFixturePages();
+
+                    if(syncStatus == DataLoaderIntentService.DataSyncStatus.SERVER_UNAVAILABLE){
+                        Snackbar.make(fixturesContainer, R.string.server_unavailable, Snackbar.LENGTH_LONG).show();
+                    }
                 }
-            } else if (CalendarSyncIntentService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())){
+
+            } else if (CalendarSyncIntentService.BROADCAST_ACTION_STATUS_CHANGE.equals(intent.getAction())){
                 int syncStatus = intent.getIntExtra(CalendarSyncIntentService.BROADCAST_EXTRA_SYNC_STATUS, 0);
 
                 int message = getMessageBySyncStatus(syncStatus);
@@ -249,11 +254,11 @@ public class FixturesFragment extends Fragment {
 
         private int getMessageBySyncStatus(int syncStatus) {
             switch (syncStatus){
-                case CalendarSyncIntentService.SyncStatus.IN_PROGRESS:
+                case CalendarSyncIntentService.CalendarSyncStatus.IN_PROGRESS:
                     return R.string.fixtures_sync_start;
-                case CalendarSyncIntentService.SyncStatus.SUCCESS:
+                case CalendarSyncIntentService.CalendarSyncStatus.SUCCESS:
                     return R.string.fixtures_sync_success;
-                case CalendarSyncIntentService.SyncStatus.FAILURE:
+                case CalendarSyncIntentService.CalendarSyncStatus.FAILURE:
                     return R.string.fixtures_sync_failed;
                 default:
                     return 0;

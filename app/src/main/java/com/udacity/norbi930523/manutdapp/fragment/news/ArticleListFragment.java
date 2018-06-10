@@ -108,7 +108,7 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
             /* On the first run, load articles from the server if online,
              * otherwise load from database */
             if(NetworkUtils.isOnline(getContext())){
-                getContext().registerReceiver(loadingStateChangeReceiver, new IntentFilter(DataLoaderIntentService.BROADCAST_ACTION_STATE_CHANGE));
+                getContext().registerReceiver(loadingStatusChangeReceiver, new IntentFilter(DataLoaderIntentService.BROADCAST_ACTION_STATUS_CHANGE));
 
                 DataLoaderIntentService.startActionLoadNews(getContext());
             } else {
@@ -124,15 +124,15 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
 
     }
 
-    private BroadcastReceiver loadingStateChangeReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver loadingStatusChangeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(DataLoaderIntentService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())){
-                boolean isLoading = intent.getBooleanExtra(DataLoaderIntentService.BROADCAST_EXTRA_IS_LOADING, false);
+            if(DataLoaderIntentService.BROADCAST_ACTION_STATUS_CHANGE.equals(intent.getAction())){
+                int syncStatus = intent.getIntExtra(DataLoaderIntentService.BROADCAST_EXTRA_SYNC_STATUS, 0);
 
-                toggleLoadingIndicator(isLoading);
+                toggleLoadingIndicator(syncStatus == DataLoaderIntentService.DataSyncStatus.IN_PROGRESS);
 
-                if(!isLoading){
+                if(syncStatus != DataLoaderIntentService.DataSyncStatus.IN_PROGRESS){
                     /* Finished loading data from server, init cursor loader */
                     getActivity().getSupportLoaderManager()
                             .initLoader(NEWS_LOADER_ID, null, ArticleListFragment.this);
@@ -140,6 +140,10 @@ public class ArticleListFragment extends Fragment implements LoaderManager.Loade
                     /* Unregister the receiver when finished loading data,
                      * as we won't need it anymore while the user is on this screen */
                     getContext().unregisterReceiver(this);
+
+                    if(syncStatus == DataLoaderIntentService.DataSyncStatus.SERVER_UNAVAILABLE){
+                        Snackbar.make(articleListContainer, R.string.server_unavailable, Snackbar.LENGTH_LONG).show();
+                    }
                 }
             }
         }

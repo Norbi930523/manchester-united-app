@@ -22,10 +22,10 @@ import timber.log.Timber;
 
 public class CalendarSyncIntentService extends IntentService {
 
-    public static final String BROADCAST_ACTION_STATE_CHANGE = "CalendarSyncIntentService.STATE_CHANGE";
+    public static final String BROADCAST_ACTION_STATUS_CHANGE = "CalendarSyncIntentService.STATUS_CHANGE";
     public static final String BROADCAST_EXTRA_SYNC_STATUS = "CalendarSyncIntentService.SYNC_STATUS";
 
-    public static class SyncStatus{
+    public static class CalendarSyncStatus {
         public static final int IN_PROGRESS = 0;
         public static final int SUCCESS = 1;
         public static final int FAILURE = 2;
@@ -71,7 +71,7 @@ public class CalendarSyncIntentService extends IntentService {
         int writePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR);
 
         if(writePermission == PackageManager.PERMISSION_GRANTED){
-            broadcastStateChange(SyncStatus.IN_PROGRESS);
+            broadcastStatusChange(CalendarSyncStatus.IN_PROGRESS);
 
             ContentResolver contentResolver = getContentResolver();
 
@@ -96,9 +96,9 @@ public class CalendarSyncIntentService extends IntentService {
                     contentResolver.insert(CalendarContract.Reminders.CONTENT_URI, reminder);
                 }
 
-                broadcastStateChange(SyncStatus.SUCCESS);
+                broadcastStatusChange(CalendarSyncStatus.SUCCESS);
             } catch (Exception e){
-                broadcastStateChange(SyncStatus.FAILURE);
+                broadcastStatusChange(CalendarSyncStatus.FAILURE);
             }
         } else {
             Timber.d("Permission denied: WRITE_CALENDAR");
@@ -151,11 +151,11 @@ public class CalendarSyncIntentService extends IntentService {
         return valuesArray;
     }
 
-    private void broadcastStateChange(int syncStatus){
-        Intent stateChange = new Intent(BROADCAST_ACTION_STATE_CHANGE);
-        stateChange.putExtra(BROADCAST_EXTRA_SYNC_STATUS, syncStatus);
+    private void broadcastStatusChange(int syncStatus){
+        Intent statusChange = new Intent(BROADCAST_ACTION_STATUS_CHANGE);
+        statusChange.putExtra(BROADCAST_EXTRA_SYNC_STATUS, syncStatus);
 
-        sendBroadcast(stateChange);
+        sendBroadcast(statusChange);
     }
 
 }
