@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/fixtureMonth"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="@dimen/font_large"
+        android:padding="@dimen/spacing_small"
+        android:elevation="4dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="@+id/fixturesRecyclerView"
+        app:layout_constraintStart_toStartOf="@+id/fixturesRecyclerView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="July"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fixturesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fixtureMonth" />
 
-</FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

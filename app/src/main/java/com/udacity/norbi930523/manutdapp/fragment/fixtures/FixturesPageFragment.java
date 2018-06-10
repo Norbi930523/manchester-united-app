@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.loader.FixturesLoader;
@@ -30,6 +31,9 @@ public class FixturesPageFragment extends Fragment implements LoaderManager.Load
     private static final String LIST_STATE_KEY = "listState";
 
     private static final String START_OF_MONTH_PARAM = "startOfMonth";
+
+    @BindView(R.id.fixtureMonth)
+    TextView fixtureMonth;
 
     @BindView(R.id.fixturesRecyclerView)
     RecyclerView fixturesRecyclerView;
@@ -88,6 +92,9 @@ public class FixturesPageFragment extends Fragment implements LoaderManager.Load
         View root = inflater.inflate(R.layout.fragment_fixtures_page, container, false);
 
         ButterKnife.bind(this, root);
+
+        String monthName = getResources().getStringArray(R.array.months)[monthIndex];
+        fixtureMonth.setText(monthName);
 
         fixturesRecyclerView.setAdapter(fixturesAdapter);
         fixturesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

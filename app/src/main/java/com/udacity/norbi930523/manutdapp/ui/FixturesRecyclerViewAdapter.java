@@ -23,11 +23,6 @@ import butterknife.ButterKnife;
 
 public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRecyclerViewAdapter.FixtureViewHolder> {
 
-    private static class FixtureItemViewType{
-        static final int WITH_TITLE = 0;
-        static final int NORMAL = 1;
-    }
-
     private Cursor cursor;
 
     private Context context;
@@ -44,13 +39,7 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
     public FixtureViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-        int layout = R.layout.fixture_list_item;
-
-        if(viewType == FixtureItemViewType.WITH_TITLE){
-            layout = R.layout.titled_fixture_list_item;
-        }
-
-        View fixtureListItem = layoutInflater.inflate(layout, parent, false);
+        View fixtureListItem = layoutInflater.inflate(R.layout.fixture_list_item, parent, false);
 
         return new FixtureViewHolder(fixtureListItem);
     }
@@ -64,13 +53,6 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
         String venue = cursor.getString(cursor.getColumnIndex(FixtureColumns.VENUE));
         String competition = cursor.getString(cursor.getColumnIndex(FixtureColumns.COMPETITION));
         String result = cursor.getString(cursor.getColumnIndex(FixtureColumns.RESULT));
-
-        if(holder.fixtureMonth != null){
-            int fixtureMonthIndex = DateUtils.getMonth(fixtureDateMillis);
-            String monthName = context.getResources().getStringArray(R.array.months)[fixtureMonthIndex];
-
-            holder.fixtureMonth.setText(monthName);
-        }
 
         holder.fixtureDate.setText(DateUtils.formatDate(fixtureDateMillis));
         holder.fixtureOpponent.setText(String.format("v %s (%s)", opponent, venue));
@@ -103,12 +85,6 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
         return 0L;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        /* Show the first item with a title */
-        return position == 0 ? FixtureItemViewType.WITH_TITLE : FixtureItemViewType.NORMAL;
-    }
-
     public void swapCursor(Cursor newCursor){
         this.cursor = newCursor;
 
@@ -116,10 +92,6 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
     }
 
     class FixtureViewHolder extends RecyclerView.ViewHolder {
-
-        @Nullable
-        @BindView(R.id.fixtureMonth)
-        TextView fixtureMonth;
 
         @BindView(R.id.fixtureOpponentLogo)
         ImageView fixtureOpponentLogo;
