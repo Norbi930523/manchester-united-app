@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +99,7 @@ public class PlayersFragment extends Fragment implements PlayerListFragment.Play
 
         /* https://guides.codepath.com/android/shared-element-activity-transition */
         ActivityOptionsCompat options = ActivityOptionsCompat.
-                makeSceneTransitionAnimation(getActivity(), sharedElement, getString(R.string.player_image_transition));
+                makeSceneTransitionAnimation(getActivity(), sharedElement, ViewCompat.getTransitionName(sharedElement));
 
         startActivity(playerDetailsIntent, options.toBundle());
     }

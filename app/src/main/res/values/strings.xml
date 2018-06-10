@@ -6,7 +6,7 @@
 
     <!-- News -->
     <string name="article_not_found">Could not find the selected article!</string>
-    <string name="article_image_transition">articleImageTransition</string>
+    <string name="article_image_transition">articleImageTransition_%1$d</string>
     <string name="select_article">Please select an article</string>
 
     <!-- Players -->
@@ -23,7 +23,7 @@
     <string name="position_forward">Forward</string>
 
     <string name="player_not_found">Could not find the selected player!</string>
-    <string name="player_image_transition">playerImageTransition</string>
+    <string name="player_image_transition">playerImageTransition_%1$d</string>
     <string name="select_player">Please select a player</string>
 
     <string name="player_info_squad_number"><![CDATA[<b>Squad number:</b> %1$d]]></string>

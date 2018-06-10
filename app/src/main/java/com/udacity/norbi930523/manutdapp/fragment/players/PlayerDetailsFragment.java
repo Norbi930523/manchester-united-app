@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.activity.players.PlayerDetailsActivity;
@@ -97,6 +99,8 @@ public class PlayerDetailsFragment extends Fragment implements LoaderManager.Loa
 
         ButterKnife.bind(this, root);
 
+        ViewCompat.setTransitionName(playerImage, getString(R.string.player_image_transition, playerId));
+
         getActivity().getSupportLoaderManager().initLoader(PLAYER_LOADER_ID, null, this);
 
         return root;
@@ -169,22 +173,20 @@ public class PlayerDetailsFragment extends Fragment implements LoaderManager.Loa
     }
 
     private void loadImage(String imageUrl){
-        /* Start transition when the ImageView is laid out */
-        playerImage.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        playerImage.getViewTreeObserver().removeOnPreDrawListener(this);
-                        getActivity().supportStartPostponedEnterTransition();
-                        return true;
-                    }
-                }
-        );
-
         Picasso.with(getContext())
                 .load(imageUrl)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
-                .into(playerImage);
+                .into(playerImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        getActivity().supportStartPostponedEnterTransition();
+                    }
+
+                    @Override
+                    public void onError() {
+                        getActivity().supportStartPostponedEnterTransition();
+                    }
+                });
     }
 }

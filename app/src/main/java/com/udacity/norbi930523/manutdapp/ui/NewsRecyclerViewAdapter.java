@@ -2,7 +2,9 @@ package com.udacity.norbi930523.manutdapp.ui;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +68,11 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
                 .into(holder.articleImage);
+
+        /* http://mikescamell.com/shared-element-transitions-part-4-recyclerview/ */
+        String transitionName = context.getString(R.string.article_image_transition, holder.articleId);
+        ViewCompat.setTransitionName(holder.articleImage, transitionName);
+
     }
 
     @Override

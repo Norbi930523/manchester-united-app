@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +94,10 @@ public class PlayersRecyclerViewAdapter extends RecyclerView.Adapter<PlayersRecy
                 .error(R.drawable.placeholder_circle)
                 .transform(CircleImageTransformation.getInstance())
                 .into(holder.playerImage);
+
+        /* http://mikescamell.com/shared-element-transitions-part-4-recyclerview/ */
+        String transitionName = context.getString(R.string.player_image_transition, holder.playerId);
+        ViewCompat.setTransitionName(holder.playerImage, transitionName);
     }
 
     @Override

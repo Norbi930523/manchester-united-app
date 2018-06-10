@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.activity.MainActivity;
@@ -78,6 +80,8 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
         View root = inflater.inflate(R.layout.fragment_article_details, container, false);
 
         ButterKnife.bind(this, root);
+        
+        ViewCompat.setTransitionName(articleImage, getString(R.string.article_image_transition, articleId));
 
         getActivity().getSupportLoaderManager().initLoader(ARTICLE_LOADER_ID, null, this);
 
@@ -136,22 +140,20 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
     }
 
     private void loadImage(String imageUrl){
-        /* Start transition when the ImageView is laid out */
-        articleImage.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        articleImage.getViewTreeObserver().removeOnPreDrawListener(this);
-                        getActivity().supportStartPostponedEnterTransition();
-                        return true;
-                    }
-                }
-        );
-
         Picasso.with(getContext())
                 .load(imageUrl)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
-                .into(articleImage);
+                .into(articleImage, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        getActivity().supportStartPostponedEnterTransition();
+                    }
+
+                    @Override
+                    public void onError() {
+                        getActivity().supportStartPostponedEnterTransition();
+                    }
+                });
     }
 }
