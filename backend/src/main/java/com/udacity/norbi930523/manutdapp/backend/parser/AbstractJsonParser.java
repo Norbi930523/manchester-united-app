@@ -1,6 +1,6 @@
 package com.udacity.norbi930523.manutdapp.backend.parser;
 
-import com.google.appengine.repackaged.com.google.gson.Gson;
+import com.google.gson.Gson;
 
 import org.apache.commons.io.IOUtils;
 

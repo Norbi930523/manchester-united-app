@@ -8,16 +8,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
 
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.util.DateTime;
-import com.udacity.norbi930523.manutdapp.BuildConfig;
-import com.udacity.norbi930523.manutdapp.R;
-import com.udacity.norbi930523.manutdapp.backend.manutd.Manutd;
 import com.udacity.norbi930523.manutdapp.backend.manutd.model.ArticleVO;
 import com.udacity.norbi930523.manutdapp.backend.manutd.model.FixtureVO;
 import com.udacity.norbi930523.manutdapp.backend.manutd.model.PlayerVO;
@@ -27,6 +18,7 @@ import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
 import com.udacity.norbi930523.manutdapp.database.news.NewsProvider;
 import com.udacity.norbi930523.manutdapp.database.players.PlayerColumns;
 import com.udacity.norbi930523.manutdapp.database.players.PlayersProvider;
+import com.udacity.norbi930523.manutdapp.util.ApiUtils;
 import com.udacity.norbi930523.manutdapp.util.DateUtils;
 import com.udacity.norbi930523.manutdapp.util.NetworkUtils;
 import com.udacity.norbi930523.manutdapp.util.PlayerPositionUtils;
@@ -55,38 +47,8 @@ public class DataLoaderIntentService extends IntentService {
     private static final String ACTION_LOAD_PLAYERS = "com.udacity.norbi930523.manutdapp.network.action.LOAD_PLAYERS";
     private static final String ACTION_LOAD_FIXTURES = "com.udacity.norbi930523.manutdapp.network.action.LOAD_FIXTURES";
 
-    private Manutd manutdApiService;
-
     public DataLoaderIntentService() {
         super("DataLoaderIntentService");
-    }
-
-    private void initApiService(){
-        Manutd.Builder builder = new Manutd.Builder(
-                AndroidHttp.newCompatibleTransport(),
-                new AndroidJsonFactory(),
-                new HttpRequestInitializer() {
-                    @Override
-                    public void initialize(HttpRequest request) throws IOException {
-                        request.setConnectTimeout(5000);
-                    }
-                });
-
-        builder.setApplicationName(getString(R.string.app_name));
-
-        // options for running against local devappserver
-        // - 10.0.2.2 is localhost's IP address in Android emulator
-        // - turn off compression when running against local devappserver
-        builder.setRootUrl(BuildConfig.API_ENDPOINT)
-                .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-                    @Override
-                    public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-                        abstractGoogleClientRequest.setDisableGZipContent(BuildConfig.DEBUG);
-                    }
-                });
-        // end options for devappserver
-
-        manutdApiService = builder.build();
     }
 
     public static void startActionLoadNews(Context context) {
@@ -124,9 +86,6 @@ public class DataLoaderIntentService extends IntentService {
     }
 
     private void handleActionLoadNews() {
-        if(manutdApiService == null){
-            initApiService();
-        }
 
         broadcastStatusChange(DataSyncStatus.IN_PROGRESS);
 
@@ -166,7 +125,7 @@ public class DataLoaderIntentService extends IntentService {
         }
 
         try {
-            return manutdApiService.news(getNewsLastUpdate()).execute().getItems();
+            return ApiUtils.getManutdApiService().news(getNewsLastUpdate()).execute().getItems();
         } catch (IOException e) {
             Timber.e(e, "Failed to load news from server");
             return null;
@@ -194,9 +153,6 @@ public class DataLoaderIntentService extends IntentService {
     }
 
     private void handleActionLoadPlayers() {
-        if(manutdApiService == null){
-            initApiService();
-        }
 
         broadcastStatusChange(DataSyncStatus.IN_PROGRESS);
 
@@ -256,7 +212,7 @@ public class DataLoaderIntentService extends IntentService {
         }
 
         try {
-            return manutdApiService.players().execute().getItems();
+            return ApiUtils.getManutdApiService().players().execute().getItems();
         } catch (IOException e) {
             Timber.e(e, "Failed to load players from server");
             return null;
@@ -276,9 +232,6 @@ public class DataLoaderIntentService extends IntentService {
     }
 
     private void handleActionLoadFixtures() {
-        if(manutdApiService == null){
-            initApiService();
-        }
 
         broadcastStatusChange(DataSyncStatus.IN_PROGRESS);
 
@@ -325,7 +278,7 @@ public class DataLoaderIntentService extends IntentService {
         }
 
         try {
-            return manutdApiService.fixtures().execute().getItems();
+            return ApiUtils.getManutdApiService().fixtures().execute().getItems();
         } catch (IOException e) {
             Timber.e(e, "Failed to load fixtures from server");
             return null;

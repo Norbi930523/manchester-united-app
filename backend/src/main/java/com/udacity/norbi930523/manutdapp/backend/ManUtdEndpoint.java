@@ -6,11 +6,14 @@ import com.google.api.server.spi.config.ApiNamespace;
 import com.udacity.norbi930523.manutdapp.backend.dto.ArticleVO;
 import com.udacity.norbi930523.manutdapp.backend.dto.FixtureVO;
 import com.udacity.norbi930523.manutdapp.backend.dto.PlayerVO;
+import com.udacity.norbi930523.manutdapp.backend.messaging.MessageSender;
+import com.udacity.norbi930523.manutdapp.backend.messaging.MessagingTokenManager;
 import com.udacity.norbi930523.manutdapp.backend.parser.FixturesJsonParser;
 import com.udacity.norbi930523.manutdapp.backend.parser.NewsJsonParser;
 import com.udacity.norbi930523.manutdapp.backend.parser.PlayersJsonParser;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.inject.Named;
 
@@ -26,13 +29,15 @@ import javax.inject.Named;
 )
 public class ManUtdEndpoint {
 
-    /** A simple endpoint method that takes a name and says Hi back */
-    @ApiMethod(name = "sayHi")
-    public SimpleResponse sayHi(@Named("name") String name) {
-        SimpleResponse response = new SimpleResponse();
-        response.setData("Hi, " + name);
+    @ApiMethod(name = "registerToken", httpMethod = "POST")
+    public void registerToken(@Named("token") String token) {
+        MessagingTokenManager.getInstance().registerToken(token);
+    }
 
-        return response;
+    @ApiMethod(name = "sendNotification", httpMethod = "POST")
+    public void sendNotification(Map<String, String> notificationData) {
+        System.out.println("Send message");
+        MessageSender.getInstance().sendMessage(notificationData);
     }
 
     @ApiMethod(name = "news", httpMethod = "GET")
