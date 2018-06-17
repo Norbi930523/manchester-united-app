@@ -49,6 +49,10 @@
     <string name="title_players">Players</string>
     <string name="title_fixtures">Fixtures</string>
 
+    <!-- Notifications -->
+    <string name="goal_title">GOAL! {scorer} {scoreTime}\'</string>
+    <string name="goal_text">{homeTeam} {homeTeamScore} - {awayTeamScore} {awayTeam}</string>
+
     <string-array name="months">
         <item>January</item>
         <item>February</item>

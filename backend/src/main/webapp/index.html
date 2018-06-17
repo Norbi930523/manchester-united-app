@@ -76,7 +76,8 @@
             'awayTeam': document.getElementById('awayTeamSelector').value,
             'awayTeamScore': document.getElementById('awayTeamScore').value,
             'scorer': document.getElementById('scorerSelector').value,
-            'scoreTime': document.getElementById('scoreTime').value
+            'scoreTime': document.getElementById('scoreTime').value,
+            'type': 'GOAL'
         };
 
         gapi.client.manutd.sendNotification(json).execute();
