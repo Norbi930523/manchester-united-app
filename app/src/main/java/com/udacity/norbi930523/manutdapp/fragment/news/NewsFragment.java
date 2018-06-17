@@ -12,11 +12,11 @@ import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.activity.news.ArticleDetailsActivity;
+import com.udacity.norbi930523.manutdapp.util.AnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +44,8 @@ public class NewsFragment extends Fragment implements ArticleListFragment.Articl
         super.onCreate(savedInstanceState);
 
         getActivity().setTitle(R.string.title_news);
+
+        AnalyticsUtils.logScreenView(getActivity().getTitle().toString());
     }
 
     @Override

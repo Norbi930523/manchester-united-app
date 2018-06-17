@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.activity.players.PlayerDetailsActivity;
+import com.udacity.norbi930523.manutdapp.util.AnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +44,8 @@ public class PlayersFragment extends Fragment implements PlayerListFragment.Play
         super.onCreate(savedInstanceState);
 
         getActivity().setTitle(R.string.title_players);
+
+        AnalyticsUtils.logScreenView(getActivity().getTitle().toString());
     }
 
     @Override

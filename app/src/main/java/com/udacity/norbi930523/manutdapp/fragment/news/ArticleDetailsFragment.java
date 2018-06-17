@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,10 +21,10 @@ import android.widget.Toast;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.udacity.norbi930523.manutdapp.R;
-import com.udacity.norbi930523.manutdapp.activity.MainActivity;
 import com.udacity.norbi930523.manutdapp.activity.news.ArticleDetailsActivity;
 import com.udacity.norbi930523.manutdapp.database.news.ArticleColumns;
 import com.udacity.norbi930523.manutdapp.loader.NewsLoader;
+import com.udacity.norbi930523.manutdapp.util.AnalyticsUtils;
 import com.udacity.norbi930523.manutdapp.util.TextUtils;
 
 import butterknife.BindView;
@@ -109,6 +108,8 @@ public class ArticleDetailsFragment extends Fragment implements LoaderManager.Lo
             articleSummary.setText(summary);
 
             TextUtils.setHtmlText(articleContent, content);
+
+            AnalyticsUtils.logEvent("News", String.format("Read: %s", title));
 
         } else {
             Toast.makeText(getContext(), R.string.article_not_found, Toast.LENGTH_LONG).show();

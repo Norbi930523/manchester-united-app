@@ -25,6 +25,7 @@ import com.udacity.norbi930523.manutdapp.R;
 import com.udacity.norbi930523.manutdapp.activity.players.PlayerDetailsActivity;
 import com.udacity.norbi930523.manutdapp.database.players.PlayerColumns;
 import com.udacity.norbi930523.manutdapp.loader.PlayersLoader;
+import com.udacity.norbi930523.manutdapp.util.AnalyticsUtils;
 import com.udacity.norbi930523.manutdapp.util.PlayerPositionUtils;
 import com.udacity.norbi930523.manutdapp.util.TextUtils;
 
@@ -143,6 +144,8 @@ public class PlayerDetailsFragment extends Fragment implements LoaderManager.Loa
             TextUtils.setHtmlText(this.appearances, getString(R.string.player_info_appearances, appearances));
             TextUtils.setHtmlText(this.goals, getString(R.string.player_info_goals, goals));
             TextUtils.setHtmlText(this.bio, bio);
+
+            AnalyticsUtils.logEvent("Players", String.format("View: %s %s", firstName, lastName));
 
         } else {
             Toast.makeText(getContext(), R.string.player_not_found, Toast.LENGTH_LONG).show();

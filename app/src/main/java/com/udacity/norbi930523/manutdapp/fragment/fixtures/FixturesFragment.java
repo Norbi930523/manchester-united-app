@@ -31,6 +31,7 @@ import com.udacity.norbi930523.manutdapp.database.fixtures.FixtureColumns;
 import com.udacity.norbi930523.manutdapp.database.fixtures.FixturesProvider;
 import com.udacity.norbi930523.manutdapp.service.CalendarSyncIntentService;
 import com.udacity.norbi930523.manutdapp.service.DataLoaderIntentService;
+import com.udacity.norbi930523.manutdapp.util.AnalyticsUtils;
 import com.udacity.norbi930523.manutdapp.util.DateUtils;
 import com.udacity.norbi930523.manutdapp.util.NetworkUtils;
 
@@ -75,6 +76,8 @@ public class FixturesFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         getActivity().setTitle(R.string.title_fixtures);
+
+        AnalyticsUtils.logScreenView(getActivity().getTitle().toString());
     }
 
     @Override
@@ -146,6 +149,8 @@ public class FixturesFragment extends Fragment {
         } else {
             CalendarSyncIntentService.startActionSyncFixtures(getContext());
         }
+
+        AnalyticsUtils.logEvent("Fixtures", "Sync fixtures to calendar");
     }
 
     private void populateFixturePages() {
