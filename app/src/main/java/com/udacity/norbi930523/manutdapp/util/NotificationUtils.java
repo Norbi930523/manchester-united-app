@@ -1,9 +1,11 @@
 package com.udacity.norbi930523.manutdapp.util;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -20,17 +22,28 @@ public class NotificationUtils {
     }
 
     private static final String CHANNEL_ID = "default";
+    private static final String CHANNEL_NAME = "default";
 
     private NotificationUtils(){}
 
-    private static NotificationCompat.Builder getBaseNotification(Context context){
-        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_notification);
+    private static NotificationChannel getNotificationChannel(){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.enableLights(true);
+            channel.setLightColor(Color.RED);
+            channel.setShowBadge(false);
 
+            return channel;
+        }
+
+        return null;
+    }
+
+    private static NotificationCompat.Builder getBaseNotification(Context context){
         Uri notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setLargeIcon(largeIcon)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setSound(notificationSound)
                 .setAutoCancel(true);
@@ -47,6 +60,10 @@ public class NotificationUtils {
 
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notificationManager.createNotificationChannel(getNotificationChannel());
+        }
 
         notificationManager.notify(notificationType.ordinal(), notificationBuilder.build());
     }
