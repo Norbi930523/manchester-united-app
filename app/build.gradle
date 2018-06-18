@@ -15,6 +15,14 @@ buildscript {
 }
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'man-utd-app'
+            keyPassword 'SEAKSdSP'
+            storeFile file('keystores/keystore.jks')
+            storePassword 'pLK7bF5V'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.udacity.norbi930523.manutdapp"
