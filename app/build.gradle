@@ -80,8 +80,14 @@ dependencies {
     implementation 'net.simonvt.schematic:schematic:0.7.0'
 
     endpointsServer project(path: ':backend', configuration: 'endpoints')
-    implementation 'com.google.api-client:google-api-client:1.23.0'
-    implementation 'com.google.http-client:google-http-client-android:1.23.0'
+
+    // https://stackoverflow.com/a/47197247
+    implementation('com.google.api-client:google-api-client:1.23.0'){
+        exclude group: 'org.apache.httpcomponents'
+    }
+    implementation('com.google.http-client:google-http-client-android:1.23.0'){
+        exclude group: 'org.apache.httpcomponents'
+    }
 }
 
 apply plugin: 'com.google.gms.google-services'
